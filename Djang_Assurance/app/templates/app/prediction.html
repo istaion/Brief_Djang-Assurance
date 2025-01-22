@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Données de la victime :</h2>
-    <form method="get">
+    <form method="post">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">Rechercher</button>
