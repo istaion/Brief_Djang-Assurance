@@ -59,4 +59,18 @@ class Prediction(models.Model):
     
     def pred(self):
         pred = self.reg_model.calcul_prediction(self.age, self.sex, self.weight, self.size, self.children, self.smoker, self.region)[0]
-        self.result = pred
+        self.result = round(pred,2)
+    
+    def fr_transform(self):
+        match self.sex:
+            case 'female': self.sex = 'femme'
+            case 'male' :self.sex = 'homme'
+        match self.smoker:
+            case 'yes': self.smoker = 'oui'
+            case 'no' : self.smoker = 'non'
+        match self.region:
+            case "southeast" : self.region = "Sud Est"
+            case "southwest" : self.region = "Sud Ouest"
+            case "northeast" : self.region = "Nord Est" 
+            case "northwest" : self.region = "Nord Ouest"
+

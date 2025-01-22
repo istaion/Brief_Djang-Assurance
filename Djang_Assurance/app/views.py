@@ -17,6 +17,7 @@ class PredictionView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.pred()
+        self.object.fr_transform()
         self.object.save()
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)
