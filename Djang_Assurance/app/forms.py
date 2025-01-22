@@ -5,6 +5,11 @@ SEX_CHOICES =(
     ("male", "Homme")
 ) 
 
+SEX_CHOICES =( 
+    ("yes", "Oui"), 
+    ("no", "Non")
+) 
+
 REGION_CHOICES =( 
     ("southeast", "Sud Est"), 
     ("southwest", "Sud Ouest"),
@@ -18,5 +23,5 @@ class PredictionForm(forms.Form):
     weight = forms.FloatField(min_value=0.1,max_value=300)
     size = forms.FloatField(min_value=1,max_value=300)
     children = forms.IntegerField(min_value=0, max_value=30)
-    smoker	= forms.BooleanField()
+    smoker	= forms.ChoiceField(choices=SEX_CHOICES)
     region = forms.ChoiceField(choices=REGION_CHOICES)
