@@ -22,15 +22,40 @@ REGION_CHOICES =(
 ) 
 
 class Reg_model(models.Model):
-    name = models.CharField(max_length=200)
-    path = models.FilePathField(path='app/regression/models/')
+    """
+    Represents a machine learning regression model used for insurance predictions.
+
+    Attributes:
+        name (str): The name of the regression model.
+        path (FilePathField): The file path where the serialized model is stored.
+    """
+    name = models.CharField(max_length=200,
+                            help_text="The name of the regression model (e.g., 'Lasso Regression Model').")
+    path = models.FilePathField(path='app/regression/models/',
+                                help_text="The path to the serialized regression model file.")
 
     def calcul_prediction(self, age, sex, weight, size, children, smoker, region):
+        """
+        Calculates an insurance prediction using the regression model.
+
+        Args:
+            age (int): The user's age.
+            sex (str): The user's gender ('male' or 'female').
+            weight (float): The user's weight in kilograms.
+            size (float): The user's height in centimeters.
+            children (int): The number of children the user has.
+            smoker (str): Whether the user is a smoker ('yes' or 'no').
+            region (str): The user's residential region.
+
+        Returns:
+            float: The predicted insurance premium.
+        """
         bmi = weight / pow(size / 100, 2)
         data = pd.DataFrame(
             data=[[age, sex, bmi, children, smoker, region]],
             columns=["age", "sex", "bmi", "children", "smoker", "region"]
         )
+        # Load the serialized regression model
         with open(self.path, 'rb') as f:
             reg = cloudpickle.load(f)
         prediction = reg.predict(data)
@@ -41,6 +66,21 @@ class Reg_model(models.Model):
     
 
 class Prediction(models.Model):
+    """
+    Represents a user's prediction request and result.
+
+    Attributes:
+        age (int): The user's age (default: 10).
+        sex (str): The user's gender ('male' or 'female', default: 'female').
+        weight (float): The user's weight in kilograms (default: 60).
+        size (float): The user's height in centimeters (default: 170).
+        children (int): The number of children the user has (default: 5).
+        smoker (str): Indicates if the user is a smoker ('yes' or 'no', default: 'no').
+        region (str): The user's residential region (default: 'northwest').
+        result (float): The predicted insurance premium (nullable).
+        user_id (ForeignKey): Reference to the user associated with the prediction.
+        reg_model (ForeignKey): The regression model used for prediction (nullable).
+    """
     age = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(130)], default =10)
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, default="female")
     weight = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(300)], default =60)
@@ -55,13 +95,37 @@ class Prediction(models.Model):
 
 
     def __str__(self):
-        return "prédiction de l'utilisateur : " + str(self.user_id) + "avec un résultat de : " + str(self.result)
+        return f"prédiction de l'utilisateur : {self.user_id} avec un résultat de : {self.result}"
     
     def pred(self):
-        pred = self.reg_model.calcul_prediction(self.age, self.sex, self.weight, self.size, self.children, self.smoker, self.region)[0]
+        """
+        Calculate the insurance premium using the specified regression model or
+        the most expensive prediction among all models.
+
+        Returns:
+            None: The result is stored in the `result` attribute.
+        """
+        if self.reg_model:
+            pred = self.reg_model.calcul_prediction(self.age, self.sex, self.weight, self.size, self.children, self.smoker, self.region)[0]
+        else:
+            # If no specific regression model is chosen, use the most expensive prediction
+            reg_models = Reg_model.objects.all()
+            pred_list = []
+            for model in reg_models:
+                pred_list.append(model.calcul_prediction(self.age, self.sex, self.weight, self.size, self.children, self.smoker, self.region)[0])
+            pred_list.sort()
+            pred = pred_list[-1] # Choose the highest prediction
         self.result = round(pred,2)
     
     def fr_transform(self):
+        """
+        Transforms the prediction's fields into their French equivalent for better user display.
+
+        Translates:
+        - sex: 'male' -> 'homme', 'female' -> 'femme'
+        - smoker: 'yes' -> 'oui', 'no' -> 'non'
+        - region: English names to French names
+        """
         match self.sex:
             case 'female': self.sex = 'femme'
             case 'male' :self.sex = 'homme'
