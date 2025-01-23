@@ -55,6 +55,8 @@ class Reg_model(models.Model):
             data=[[age, sex, bmi, children, smoker, region]],
             columns=["age", "sex", "bmi", "children", "smoker", "region"]
         )
+        print(data)
+        print(data.dtypes)
         # Load the serialized regression model
         with open(self.path, 'rb') as f:
             reg = cloudpickle.load(f)
@@ -91,6 +93,7 @@ class Prediction(models.Model):
     result = models.FloatField(null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     reg_model = models.ForeignKey(Reg_model, on_delete=models.SET_NULL, null=True)
+    made_by_staff = models.BooleanField(default=False)
 
 
 
@@ -105,7 +108,7 @@ class Prediction(models.Model):
         Returns:
             None: The result is stored in the `result` attribute.
         """
-        if self.reg_model:
+        if self.made_by_staff:
             pred = self.reg_model.calcul_prediction(self.age, self.sex, self.weight, self.size, self.children, self.smoker, self.region)[0]
         else:
             # If no specific regression model is chosen, use the most expensive prediction

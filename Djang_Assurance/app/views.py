@@ -1,13 +1,8 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
-import os
-from django.views.generic import FormView, CreateView, ListView, DetailView
-from .forms import PredictionForm, UserPredictionForm
-import pickle
-import cloudpickle
-import pandas as pd
-import sklearn
-from app.regression.regression_model import AgeTransformer, BmiTransformer
-from .models import Prediction, Reg_model
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView
+from .forms import PredictionForm, UserPredictionForm, PredictionFilterForm
+from .models import Prediction
 
 # Team Unicorn: Views for handling Predictions
 
@@ -29,20 +24,121 @@ class PredictionView(CreateView):
         - Save the object and redirect to the result view.
         """
         self.object = form.save(commit=False)  # Save the object without committing.
+        self.object.made_by_staff = True
         self.object.pred()  # Compute the prediction result.
         self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)  # Redirect to the result page.
 
+class PredictionUpdateView(UpdateView):
+    model = Prediction
+    template_name = 'app/prediction_update.html'
+    form_class = PredictionForm
 
-class PredictionsListView(ListView):
+    def form_valid(self, form):
+        """
+        Process the form after validation:
+        - Save the prediction object without committing to the database.
+        - Call the `pred` method to compute the result.
+        - Call `fr_transform` to localize the fields.
+        - Save the object and redirect to the result view.
+        """
+        self.object = form.save(commit=False)  # Save the object without committing.
+        self.object.made_by_staff = True
+        self.object.pred()  # Compute the prediction result.
+        self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
+        self.object.save()  # Save the object to the database.
+        prediction_id = self.object.id
+        return redirect('result', pk=prediction_id)  # Redirect to the result page.
+    
+class PredictionDeleteView(DeleteView):
+    model = Prediction
+    template_name = 'app/prediction_confirm_delete.html'
+    success_url = reverse_lazy('results')
+
+
+
+class PredictionsListView(ListView, FormView):
     """
-    Displays a list of all saved Prediction objects.
+    Vue combinée ListView et FormView pour afficher les prédictions avec
+    options de filtrage et de tri.
     """
     model = Prediction
     template_name = 'app/results.html'
-    context_object_name = 'predictions'  # Use 'predictions' as the context variable in the template.
+    context_object_name = 'predictions'
+    form_class = PredictionFilterForm
+
+    def get_form(self, form_class=None):
+        """
+        Retourne une instance du formulaire lié avec les données de la requête.
+        """
+        if form_class is None:
+            form_class = self.get_form_class()
+        # Lie les données GET au formulaire
+        return form_class(self.request.GET or None)
+
+    def get_queryset(self):
+        """
+        Applique les filtres et les tris selon les données du formulaire.
+        """
+        print("get_queryset is called") 
+        queryset = super().get_queryset()
+        form = self.get_form()
+        if form.is_valid():
+            # Filtres
+            user = form.cleaned_data.get('user')
+            min_age = form.cleaned_data.get('min_age')
+            max_age = form.cleaned_data.get('max_age')
+            min_children = form.cleaned_data.get('min_children')
+            max_children = form.cleaned_data.get('max_children')
+            min_weight = form.cleaned_data.get('min_weight')
+            max_weight = form.cleaned_data.get('max_weight')
+            min_size = form.cleaned_data.get('min_size')
+            max_size = form.cleaned_data.get('max_size')
+            sex = form.cleaned_data.get('sex')
+            smoker = form.cleaned_data.get('smoker')
+            region = form.cleaned_data.get('region')
+            reg_model = form.cleaned_data.get('reg_model')
+
+            if user:
+                queryset = queryset.filter(user_id__username__icontains=user)
+            if min_age is not None:
+                queryset = queryset.filter(age__gte=min_age)
+            if max_age is not None:
+                queryset = queryset.filter(age__lte=max_age)
+            if min_children is not None:
+                queryset = queryset.filter(children__gte=min_children)
+            if max_children is not None:
+                queryset = queryset.filter(children__lte=max_children)
+            if min_weight is not None:
+                queryset = queryset.filter(weight__gte=min_weight)
+            if max_weight is not None:
+                queryset = queryset.filter(weight__lte=max_weight)
+            if min_size is not None:
+                queryset = queryset.filter(size__gte=min_size)
+            if max_size is not None:
+                queryset = queryset.filter(size__lte=max_size)
+            if sex:
+                queryset = queryset.filter(sex=sex)
+            if smoker:
+                queryset = queryset.filter(smoker=smoker)
+            if region:
+                queryset = queryset.filter(region=region)
+            if reg_model:
+                queryset = queryset.filter(reg_model_id__name__icontains=reg_model)
+
+            # Tri
+            sort_by = form.cleaned_data.get('sort_by')
+            order = form.cleaned_data.get('order', 'asc')
+            if sort_by:
+                if order == "desc":
+                    sort_by = f"-{sort_by}"  # Tri descendant
+                queryset = queryset.order_by(sort_by)
+        else:
+            print("Form is not valid:", form.errors)
+        return queryset
+
 
 
 class ResultView(DetailView):

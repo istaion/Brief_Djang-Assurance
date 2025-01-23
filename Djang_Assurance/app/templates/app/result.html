@@ -20,6 +20,7 @@
                 <li>fumeur : {{prediction.smoker}}</li>
                 <li>region : {{prediction.region}}</li>
             </ul>
+            <a href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a href="{% url 'prediction_update' prediction.id %}">Modifier</a>
         </div>
     </div>
 
