@@ -37,7 +37,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'app',
-
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,13 +49,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -121,11 +132,19 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    ]
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# # Dossier pour collecter les fichiers statiques (collectstatic)
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+NPM_BIN_PATH = 'npm'
