@@ -63,16 +63,6 @@ class Reg_model(models.Model):
         prediction = reg.predict(data)
         return prediction
     
-    # @staticmethod
-    # def get_reg_model_for_form():
-    #     list_reg_models = []
-    #     reg_models = Reg_model.objects.all()
-    #     for model in reg_models:
-    #         list_reg_models.append((model.name,model.name))
-    #     return list_reg_models
-
-    # def __str__(self):
-    #     return self.name
     
 
 class Prediction(models.Model):

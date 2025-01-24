@@ -15,20 +15,6 @@ def acceuil(request):
     else:
         return redirect('user_prediction')
 
-def inscription(request):
-    if request.method == 'POST':
-        form = InscriptionForm(request.POST)
-        if form.is_valid():
-            utilisateur = form.save(commit=False)
-            utilisateur.first_name = form.cleaned_data['prenom']
-            utilisateur.last_name = form.cleaned_data['nom']
-            utilisateur.set_password(form.cleaned_data['mot_de_passe'])
-            utilisateur.save()
-            messages.success(request, "Inscription réussie ! Vous pouvez maintenant vous connecter.")
-            return redirect('connexion')  
-    else:
-        form = InscriptionForm()
-
 
 class InscriptionView(FormView):
     template_name= 'user/inscription.html'

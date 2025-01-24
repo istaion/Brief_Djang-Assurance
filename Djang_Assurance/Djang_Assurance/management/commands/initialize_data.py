@@ -1,12 +1,13 @@
 from django.core.management.base import BaseCommand
 from user.models import CustomUser
-from app.models import Prediction
+from app.models import Prediction, Reg_model
 
 class Command(BaseCommand):
     help = 'Initialise la base de données avec des utilisateurs et des prédictions'
 
     def handle(self, *args, **kwargs):
         # Créer les modèles
+        Reg_model.objects.create(name = "", path="/basic_linreg_model.pkl")
 
         # Créer des utilisateurs
         user1 = CustomUser.objects.create_user(username='JeanMichou', prenom='Jean', nom='Michou', password='password')
