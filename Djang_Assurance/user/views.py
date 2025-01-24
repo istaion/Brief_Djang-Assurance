@@ -30,29 +30,16 @@ class InscriptionView(FormView):
         messages.error(self.request, "Veuillez corriger les erreurs du formulaire.")
         return super().form_invalid(form)
 
-# def inscription(request):
-#     if request.method == 'POST':
-#         form = InscriptionForm(request.POST)
-#         if form.is_valid():
-#             utilisateur = form.save(commit=False)
-#             utilisateur.first_name = form.cleaned_data['prenom']
-#             utilisateur.last_name = form.cleaned_data['nom']
-#             utilisateur.set_password(form.cleaned_data['mot_de_passe'])
-#             utilisateur.save()
-#             messages.success(request, "Inscription réussie ! Vous pouvez maintenant vous connecter.")
-#             return redirect('inscription')  
-#     else:
-#         form = InscriptionForm()
-
-#     return render(request, 'user/inscription.html', {'form': form})
 
 class Connexion(LoginView):
-    success_url = reverse_lazy('Accueil')
     template_name = 'user/connexion.html'
-    redirect_authenticated_user = True
+    redirect_authenticated_user = True 
+    success_url = reverse_lazy('accueil') 
 
-class Deconnexion(LogoutView):
-    next_page = reverse_lazy('connexion')
+
+class DeconnexionView(LogoutView):
+    
+    next_page = reverse_lazy('accueil')  
 
 
 class Accueil(LoginRequiredMixin,TemplateView):

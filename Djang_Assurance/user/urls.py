@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import InscriptionForm, Connexion, Accueil
+from .views import InscriptionView, Connexion, Accueil, DeconnexionView
 
 urlpatterns = [
-    path('', Accueil.as_view(), name='accueil'),
-    path('inscription/', InscriptionForm, name='inscription'),
+    path('inscription/', InscriptionView.as_view(), name='inscription'),
     path('connexion/', Connexion.as_view(), name='connexion'),
+    path('deconnexion/', DeconnexionView.as_view(), name='deconnexion'),
+    path('accueil/', Accueil.as_view(), name='accueil'),
+
 ]

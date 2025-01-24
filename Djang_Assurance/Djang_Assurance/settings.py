@@ -111,7 +111,7 @@ AUTH_USER_MODEL = 'user.CustomUser'
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
@@ -131,4 +131,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'connexion'
-LOGOUT_REDIRECT_URL = 'Accueil/'
+LOGIN_REDIRECT_URL = 'accueil'
+LOGOUT_REDIRECT_URL = '/'  
+
