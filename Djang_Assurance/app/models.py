@@ -91,8 +91,9 @@ class Prediction(models.Model):
     smoker	= models.CharField(max_length=3, choices=SMOKER_CHOICES, default="no")
     region = models.CharField(max_length=9, choices=REGION_CHOICES, default="northwest")
     result = models.FloatField(null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     reg_model = models.ForeignKey(Reg_model, on_delete=models.SET_NULL, null=True)
+    # made_by = models.ForeignKey(User, on_delete=models.CASCADE)
     made_by_staff = models.BooleanField(default=False)
 
 

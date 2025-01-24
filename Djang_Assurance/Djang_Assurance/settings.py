@@ -37,7 +37,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'app',
-
+    'meetings',
+    "django_agenda",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
