@@ -37,7 +37,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'app',
-    'meetings',
     "django_agenda",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -132,3 +131,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'connexion'
+LOGIN_REDIRECT_URL = 'acceuil'
+LOGOUT_REDIRECT_URL = 'connexion'

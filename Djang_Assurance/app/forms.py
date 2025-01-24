@@ -1,5 +1,6 @@
 from django import forms
-from .models import User, Reg_model, Prediction
+from .models import Reg_model, Prediction
+from django.db.utils import OperationalError
 
 class PredictionForm(forms.ModelForm):
     """
@@ -11,7 +12,7 @@ class PredictionForm(forms.ModelForm):
     class Meta:
         model = Prediction
         fields = '__all__'
-        exclude = ['result','made_by_staff']
+        exclude = ['result','made_by_staff', 'made_by']
 
 
 
@@ -27,19 +28,26 @@ class UserPredictionForm(forms.ModelForm):
     class Meta:
         model = Prediction
         fields = '__all__'
-        exclude = ['result', 'made_by_staff', 'reg_model']
-
-def get_reg_model():
-    list_reg_models = []
-    reg_models = Reg_model.objects.all()
-    for model in reg_models:
-        list_reg_models.append((model.name,model.name))
-    return list_reg_models
+        exclude = ['result', 'made_by_staff', 'reg_model', 'user_id', 'made_by']
 
 class PredictionFilterForm(forms.Form):
     """
     Formulaire pour rechercher et filtrer les prédictions.
     """
+    
+    def __init__(self, *args, **kwargs):
+        """
+        Juste pour que django ne m'embète pas pour la première migration
+        """
+        super().__init__(*args, **kwargs)
+        try:
+            # Charge dynamiquement les choix de modèles de régression
+            reg_models = Reg_model.objects.all()
+            self.fields['reg_model'].choices = [("", "Tous")] + [(model.name, model.name) for model in reg_models]
+        except OperationalError:
+            # Si la table n'existe pas encore (par ex. lors des migrations), on laisse le champ vide
+            self.fields['reg_model'].choices = [("", "Tous")]
+    
     user = forms.CharField(required=False, label="Nom d'utilisateur")
     min_age = forms.IntegerField(required=False, min_value=0, max_value=200, label="Âge minimum")
     max_age = forms.IntegerField(required=False, min_value=0, max_value=200, label="Âge maximum")
@@ -60,7 +68,7 @@ class PredictionFilterForm(forms.Form):
                                         ("Nord Ouest","Nord Ouest"), ("Nord Est","Nord Est") ], 
                                label="Région")
     reg_model = forms.ChoiceField(required=False, 
-                               choices=get_reg_model(),
+                               choices=[],
                                label="model")
     sort_by = forms.ChoiceField(
         required=False,
@@ -77,6 +85,5 @@ class PredictionFilterForm(forms.Form):
         choices=[("asc", "Ascendant"), ("desc", "Descendant")],
         label="Ordre",
     )
-
 
 

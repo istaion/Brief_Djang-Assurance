@@ -6,6 +6,9 @@
     <title>Prediction</title>
 </head>
 <body>
+    {% if request.user %}
+        <p>Bonjour {{request.user}} </p>
+    {% endif %}
     <h2>Données de la victime :</h2>
     <form method="post">
         {% csrf_token %}
@@ -13,5 +16,6 @@
         <button type="submit">Rechercher</button>
     </form>
     <a href="{% url 'results' %}">Liste des prédictions</a>
+    <a href="{% url 'logout' %}">Déconnexion</a>
 </body>
 </html>

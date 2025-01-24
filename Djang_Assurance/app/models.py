@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from user.models import CustomUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 import pandas as pd
 import cloudpickle
@@ -62,9 +62,17 @@ class Reg_model(models.Model):
             reg = cloudpickle.load(f)
         prediction = reg.predict(data)
         return prediction
+    
+    # @staticmethod
+    # def get_reg_model_for_form():
+    #     list_reg_models = []
+    #     reg_models = Reg_model.objects.all()
+    #     for model in reg_models:
+    #         list_reg_models.append((model.name,model.name))
+    #     return list_reg_models
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
     
 
 class Prediction(models.Model):
@@ -91,9 +99,9 @@ class Prediction(models.Model):
     smoker	= models.CharField(max_length=3, choices=SMOKER_CHOICES, default="no")
     region = models.CharField(max_length=9, choices=REGION_CHOICES, default="northwest")
     result = models.FloatField(null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, related_name='profile')
     reg_model = models.ForeignKey(Reg_model, on_delete=models.SET_NULL, null=True)
-    # made_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    made_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     made_by_staff = models.BooleanField(default=False)
 
 

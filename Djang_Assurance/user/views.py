@@ -6,7 +6,14 @@ from django.shortcuts import render, redirect
 from .models import CustomUser
 from django.contrib import messages
 from .forms import InscriptionForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout
+
+def acceuil(request):
+    if request.user.is_staff:
+        return redirect('prediction')
+    else:
+        return redirect('user_prediction')
 
 def inscription(request):
     if request.method == 'POST':
@@ -18,13 +25,15 @@ def inscription(request):
             utilisateur.set_password(form.cleaned_data['mot_de_passe'])
             utilisateur.save()
             messages.success(request, "Inscription réussie ! Vous pouvez maintenant vous connecter.")
-            return redirect('inscription')  
+            return redirect('connexion')  
     else:
         form = InscriptionForm()
 
     return render(request, 'user/inscription.html', {'form': form})
 
 class Connexion(LoginView):
-    success_url = reverse_lazy('Accueil')
     template_name = 'user/connexion.html'
-    redirect_authenticated_user = True
+
+def debug_logout_view(request):
+    logout(request)
+    return redirect('connexion')  # Redirige vers la route nommée 'connexion'

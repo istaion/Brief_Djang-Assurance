@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView
+from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView, View
 from .forms import PredictionForm, UserPredictionForm, PredictionFilterForm
 from .models import Prediction
 
@@ -27,6 +27,7 @@ class PredictionView(CreateView):
         self.object.made_by_staff = True
         self.object.pred()  # Compute the prediction result.
         self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
+        self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)  # Redirect to the result page.
@@ -48,6 +49,7 @@ class PredictionUpdateView(UpdateView):
         self.object.made_by_staff = True
         self.object.pred()  # Compute the prediction result.
         self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
+        self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)  # Redirect to the result page.
@@ -152,7 +154,19 @@ class ResultView(DetailView):
 
 # Views for User-specific Predictions
 
-class UserPredictionView(CreateView):
+
+class UserPredictionView(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            # Vérifie si une prédiction existe pour l'utilisateur
+            prediction = Prediction.objects.get(user_id=request.user)
+            return redirect('user_result', pk=prediction.id)
+        except Prediction.DoesNotExist:
+            # Sinon, redirige vers 'user_create'
+            Prediction.objects.get(user_id=request.user)
+            return redirect('user_create')
+
+class UserCreatePredictionView(CreateView):
     """
     Handles the creation of a new Prediction object for a user.
     Uses the UserPredictionForm and excludes fields like `reg_model` and `result`.
@@ -172,6 +186,8 @@ class UserPredictionView(CreateView):
         self.object = form.save(commit=False)  # Save the object without committing.
         self.object.pred()  # Compute the prediction result.
         self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
+        self.object.user_id = self.request.user
+        self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
         return redirect('user_result', pk=prediction_id)  # Redirect to the user-specific result page.
@@ -184,3 +200,25 @@ class UserResultView(DetailView):
     model = Prediction
     template_name = 'app/user_result.html'
     context_object_name = 'prediction'  # Use 'prediction' as the context variable in the template.
+
+class UserPredictionUpdateView(UpdateView):
+    model = Prediction
+    template_name = 'app/user_prediction_update.html'
+    form_class = UserPredictionForm
+
+    def form_valid(self, form):
+        """
+        Process the form after validation:
+        - Save the prediction object without committing to the database.
+        - Call the `pred` method to compute the result.
+        - Call `fr_transform` to localize the fields.
+        - Save the object and redirect to the result view.
+        """
+        self.object = form.save(commit=False)  # Save the object without committing.
+        self.object.pred()  # Compute the prediction result.
+        self.object.fr_transform()  # Localize certain fields (e.g., sex, smoker).
+        self.object.made_by = self.request.user
+        self.object.user_id = self.request.user
+        self.object.save()  # Save the object to the database.
+        prediction_id = self.object.id
+        return redirect('user_result', pk=prediction_id)  # Redirect to the result page.
