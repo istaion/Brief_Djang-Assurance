@@ -37,7 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user',
     'app',
-    'theme'
+    'theme',
     'tailwind',
     'django.contrib.admin',
     'django.contrib.auth',
