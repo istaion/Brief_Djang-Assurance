@@ -7,6 +7,15 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import InscriptionForm, ModifProfilForm
 from .models import CustomUser
+from django.views import View
+
+class AccueilView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_staff: 
+            return redirect('prediction')
+        else:
+            return redirect('user_prediction')
+
 
 
 class InscriptionView(FormView):
@@ -34,8 +43,6 @@ class InscriptionView(FormView):
 
 class Connexion(LoginView):
     template_name = 'user/connexion.html'
-    redirect_authenticated_user = True 
-    success_url = reverse_lazy('accueil') 
 
 
 class DeconnexionView(LogoutView):
@@ -43,7 +50,7 @@ class DeconnexionView(LogoutView):
     next_page = reverse_lazy('accueil')  
 
 
-class Accueil(LoginRequiredMixin,TemplateView):
+class Accueil(TemplateView):
     template_name= 'user/accueil.html'
 
     def get_context_data(self, **kwargs):

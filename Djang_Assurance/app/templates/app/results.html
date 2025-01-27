@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+</head>
+<body>
+    <p>Par ici la moula :</p>
+    <h1>Liste des Prédictions</h1>
+
+
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <!-- Tableau des prédictions -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Utilisateur</th>
+                <th>Âge</th>
+                <th>Genre</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>Enfants</th>
+                <th>Fumeur</th>
+                <th>Région</th>
+                <th>Modèle</th>
+                <th>Résultat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prediction in predictions %}
+                <tr>
+                    <td>{{ prediction.id }}</td>
+                    <td>{{ prediction.user_id.username }}</td>
+                    <td>{{ prediction.age }}</td>
+                    <td>{{ prediction.sex }}</td>
+                    <td>{{ prediction.weight }}</td>
+                    <td>{{ prediction.size }}</td>
+                    <td>{{ prediction.children }}</td>
+                    <td>{{ prediction.smoker }}</td>
+                    <td>{{ prediction.region }}</td>
+                    <td>{{ prediction.reg_model }}</td>
+                    <td>{{ prediction.result }}</td>
+                    <td>
+                        <a href="{% url 'result' prediction.id %}">Voir</a> |
+                        <a href="{% url 'prediction_delete' prediction.id %}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'prediction' %}">Réaliser une autre prédiction</a>
+</body>
+</html>

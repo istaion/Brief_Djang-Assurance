@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+</head>
+<body>
+    <div>
+        <h2>Par ici la moula :</h2>
+        <p>Avec le model {{prediction.reg_model}} on peut lui sucer {{ prediction.result }} boules !</p>
+        <div>
+            <h3>Données de la victime :</h3>
+            <ul>
+                <li>age : {{prediction.age}}</li>
+                <li>genre : {{prediction.sex}}</li>
+                <li>poid : {{prediction.weight}} kg</li>
+                <li>taille : {{prediction.size}} cm</li>
+                <li>nombre d'enfants : {{prediction.children}}</li>
+                <li>fumeur : {{prediction.smoker}}</li>
+                <li>region : {{prediction.region}}</li>
+            </ul>
+            <a href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a href="{% url 'prediction_update' prediction.id %}">Modifier</a>
+        </div>
+    </div>
+
+</body>
+</html>

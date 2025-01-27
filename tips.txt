@@ -1,0 +1,9 @@
+migrations : à mettre dans le .gitignore
+
+ducoup apparement quand on va créer les trucs, ça ne va pas faire les migrations...
+donc pour résoudre ça il faut faire un dossier migrations, et dedans un fichier __init__.py
+
+-smoker : je préfèrerais un yes or no pour être sure que la personne ait fait un choix et pas par défaut...
+
+-attention, il faut node apparement pour faire du tailwind
+v23.6.1

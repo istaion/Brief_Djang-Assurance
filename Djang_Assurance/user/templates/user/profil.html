@@ -18,7 +18,9 @@
                     <strong>Adresse :</strong> {{ user.adresse }}<br>
                 </p>
                 <div class="text-center mt-4">
+                    <a href="{% url 'user_prediction' %}" class="btn btn-primary mt-3">Voir mes prédictions</a>
                     <a href="{% url 'modification' %}" class="btn btn-info">Modifier mes informations</a>
+                    <a href="{% url 'user_create' %}" class="btn btn-primary">Faire une prédiction</a>
                     <a href="{% url 'accueil' %}" class="btn btn-secondary">Retour à l'accueil</a>
                 </div>
             </div>

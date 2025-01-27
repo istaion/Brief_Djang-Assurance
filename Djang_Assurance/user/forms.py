@@ -18,4 +18,4 @@ class InscriptionForm(forms.ModelForm):
 class ModifProfilForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['prenom', 'nom', 'email', 'age', 'adresse']  # Liste des champs modifiables
+        fields = ['prenom', 'nom', 'email', 'age', 'adresse'] 
