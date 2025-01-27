@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mettre à jour la prédiction</title>
-</head>
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
 <body>
     <h1>Modifier la prédiction</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Mettre à jour</button>
+        <button type="submit" class="btn text-xl">Mettre à jour</button>
     </form>
 </body>
-</html>
+{% endblock%}

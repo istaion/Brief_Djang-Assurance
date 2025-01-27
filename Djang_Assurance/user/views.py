@@ -76,3 +76,7 @@ class ModifProfilView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+
+class NewsView(TemplateView):
+    template_name = 'news.html'
