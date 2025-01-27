@@ -6,4 +6,16 @@ class InscriptionForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'prenom', 'nom', 'mot_de_passe'] 
+        fields = ['email', 'prenom', 'nom', 'mot_de_passe', 'username','age', 'adresse'] 
+        labels= {
+            'username': 'Nom d\'utilisateur',
+            'email': 'Adresse e-mail',
+            'age': 'Age',
+            'adresse': 'Adresse physique'
+        }
+
+
+class ModifProfilForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['prenom', 'nom', 'email', 'age', 'adresse']  # Liste des champs modifiables

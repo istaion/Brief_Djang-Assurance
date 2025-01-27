@@ -8,27 +8,22 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="card mx-auto" style="max-width: 400px;">
-            <div class="card-body">
-                <h2 class="card-title text-center">Connexion</h2>
-                <form method="post" novalidate>
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="mb-3">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <small class="text-danger">{{ field.errors|striptags }}</small>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-                </form>
-                <hr>
-                <p class="text-center mt-3">
-                    Pas encore inscrit ? <a href="{% url 'inscription' %}">Créer un compte</a>
-                </p>
+        <h1 class="text-center">Connexion</h1>
+        <form method="post" class="mt-4 mx-auto" style="max-width: 400px;">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <small class="text-danger">{{ field.errors|striptags }}</small>
+                {% endif %}
             </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        </form>
+        <div class="text-center mt-3">
+            <p>Vous n'avez pas encore de compte ? <a href="{% url 'inscription' %}">Inscrivez-vous ici</a></p>
         </div>
     </div>
 </body>
