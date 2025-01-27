@@ -163,7 +163,6 @@ class UserPredictionView(View):
             return redirect('user_result', pk=prediction.id)
         except Prediction.DoesNotExist:
             # Sinon, redirige vers 'user_create'
-            Prediction.objects.get(user_id=request.user)
             return redirect('user_create')
 
 class UserCreatePredictionView(CreateView):

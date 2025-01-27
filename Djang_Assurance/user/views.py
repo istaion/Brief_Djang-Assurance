@@ -49,7 +49,7 @@ class DeconnexionView(LogoutView):
     next_page = reverse_lazy('accueil')  
 
 
-class Accueil(LoginRequiredMixin,TemplateView):
+class Accueil(TemplateView):
     template_name= 'user/accueil.html'
 
     def get_context_data(self, **kwargs):
