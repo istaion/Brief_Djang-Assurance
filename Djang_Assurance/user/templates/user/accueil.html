@@ -9,21 +9,22 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Bienvenue sur Assur'AImant</h1>
-        <p class="text-center">Votre plateforme dédiée à la gestion des utilisateurs et des données d'assurance.</p>
-
-        <div class="text-center mt-4">
-            {% if user.is_authenticated %}
-                <p>Bonjour, {{ user.first_name }} {{ user.last_name }}</p>
-                <a href="{% url 'modification' %}" class="btn btn-warning">Modifier mon profil</a>
-                <form method="POST" action="{% url 'deconnexion' %}" class="d-inline">
+        {% if user.is_authenticated %}
+            <p class="text-center">Bonjour, {{ user.first_name }} {{ user.last_name }} !</p>
+            <div class="text-center">
+                <a href="{% url 'profil' %}" class="btn btn-info">Voir mon profil</a>
+                <form method="POST" action="{% url 'deconnexion' %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Se déconnecter</button>
                 </form>
-            {% else %}
+            </div>
+        {% else %}
+            <p class="text-center">Veuillez vous connecter ou vous inscrire pour accéder à nos services.</p>
+            <div class="text-center">
                 <a href="{% url 'connexion' %}" class="btn btn-primary">Connexion</a>
                 <a href="{% url 'inscription' %}" class="btn btn-secondary">Inscription</a>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
