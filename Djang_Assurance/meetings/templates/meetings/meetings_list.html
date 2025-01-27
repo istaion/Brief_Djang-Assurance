@@ -1,0 +1,10 @@
+<h1>Mes Rendez-vous</h1>
+<ul>
+    {% for meeting in object_list %}
+        <li>
+            <strong>{{ meeting.subject }}</strong> avec {{ meeting.staff_member }}
+            le {{ meeting.date|date:"d/m/Y H:i" }}
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'meeting_create' %}">Prendre un rendez-vous</a>

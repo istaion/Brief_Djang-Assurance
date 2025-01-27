@@ -5,10 +5,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .permissions import StaffRequiredMixin
 from .forms import InscriptionForm, ModifProfilForm
-from .models import CustomUser
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
+from .permissions import StaffRequiredMixin
+from .models import CustomUser
 
 class AccueilView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -16,7 +17,6 @@ class AccueilView(LoginRequiredMixin, View):
             return redirect('prediction')
         else:
             return redirect('user_prediction')
-
 
 
 class InscriptionView(FormView):
