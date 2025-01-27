@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Modifier Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Connexion</h1>
-        <form method="post" class="card p-4 shadow mx-auto" style="max-width: 400px;">
+        <h1 class="text-center">Modifier mes informations</h1>
+        <form method="post" class="card p-4 shadow mx-auto" style="max-width: 500px;">
             {% csrf_token %}
             {% for field in form %}
                 <div class="mb-3">
@@ -20,7 +20,7 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            <button type="submit" class="btn btn-warning w-100">Mettre à jour</button>
         </form>
     </div>
 </body>

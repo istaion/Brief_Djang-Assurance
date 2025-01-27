@@ -59,7 +59,7 @@ class Accueil(LoginRequiredMixin,TemplateView):
         
 
 class ProfilView(LoginRequiredMixin,TemplateView):
-    template_name = 'user/profil.htlm'
+    template_name = 'user/profil.html'
 
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)
