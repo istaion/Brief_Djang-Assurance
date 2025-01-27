@@ -4,15 +4,17 @@
 {% block content %}
 <body>
     {% if request.user.is_staff %}
-    <div class="container mt-5">
-        <h1 class="text-center">Profil Licorne</h1>
+    <div class="container mt-5 bg-white">
+        <h1 class="text-center font-bold text-xl">Profil Licorne 🦄</h1>
         <div class="card mt-4">
             <div class="card-body">
                 <h4 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h4>
+                <br></br>
                 <p class="card-text">
                     <strong>Email :</strong> {{ user.email }}<br>
                     <strong>Âge :</strong> {{ user.age }} ans<br>
                     <strong>Adresse :</strong> {{ user.adresse }}<br>
+                    <br></br>
                 </p>
                 <div class="text-center mt-4">
                     <a href="{% url 'results' %}" class="btn btn-primary">Voir mes prédictions</a>
@@ -20,12 +22,13 @@
                     <a href="{% url 'prediction' %}" class="btn btn-primary">Faire une prédiction</a>
                     <a href="{% url 'accueil' %}" class="btn btn-secondary">Retour à l'accueil</a>
                 </div>
+                <br></br>
             </div>
         </div>
     </div>
     {% else %}
     <div class="container mt-5">
-        <h1 class="text-center">Profil Utilisateur</h1>
+        <h1 class="text-center">Profil Utilisateur 🐴</h1>
         <div class="card mt-4">
             <div class="card-body">
                 <h4 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h4>

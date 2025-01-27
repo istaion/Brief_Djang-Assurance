@@ -14,13 +14,13 @@
 
 {% block content %}
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Connexion</h1>
-        {{request.user}}
+    <div class="container mt-5 bg-white">
+        <h1 class="text-center text-2xl font-bold">Connexion</h1>
+        {% comment %} {{request.user}} {% endcomment %}
         <form method="post" class="card p-4 shadow mx-auto" style="max-width: 400px;">
             {% csrf_token %}
             {% for field in form %}
-                <div class="mb-3">
+                <div class="mb-4">
                     {{ field.label_tag }}
                     {{ field }}
                     {% if field.errors %}
@@ -28,7 +28,7 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            <button type="submit" class="btn">Se connecter</button>
         </form>
     </div>
 </body>
