@@ -2,10 +2,11 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import InscriptionForm
+from .forms import InscriptionForm, ModifProfilForm
+from .models import CustomUser
 
 
 class InscriptionView(FormView):
@@ -49,3 +50,22 @@ class Accueil(LoginRequiredMixin,TemplateView):
         context= super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+        
+
+class ProfilView(LoginRequiredMixin,TemplateView):
+    template_name = 'user/profil.htlm'
+
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+    
+
+class ModifProfilView(LoginRequiredMixin, UpdateView):
+    model = CustomUser
+    form_class = ModifProfilForm
+    template_name = 'user/modif_profil.html'
+    success_url = reverse_lazy('accueil')
+
+    def get_object(self):
+        return self.request.user
