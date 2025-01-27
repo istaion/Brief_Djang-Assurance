@@ -31,9 +31,19 @@
         <a href="#" class="text-sm font-semibold text-gray-900">Marketplace</a>
         <a href="#" class="text-sm font-semibold text-gray-900">Company</a>
       </div>
+      {% if request.user.is_authenticated %}
+            <p class="text-center">Bonjour, {{ request.user.username }} !</p>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="#" class="text-sm font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        <form method="POST" action="{% url 'deconnexion' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">logout</button>
+        </form>
       </div>
+      {% else %} 
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="{% url 'connexion' %}" class="text-sm font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          </div>
+      {% endif %}
     </nav>
   </header>
 </body>

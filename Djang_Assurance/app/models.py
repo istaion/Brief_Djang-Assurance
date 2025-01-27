@@ -63,6 +63,9 @@ class Reg_model(models.Model):
         prediction = reg.predict(data)
         return prediction
     
+    def __str__(self):
+        return self.name
+    
     
 
 class Prediction(models.Model):
