@@ -7,5 +7,5 @@ urlpatterns = [
     path('deconnexion/', DeconnexionView.as_view(), name='deconnexion'),
     path('accueil/', Accueil.as_view(), name='accueil'),
     path('profil/', ProfilView.as_view(), name='profil'),
-    path('modifier-profil/', ModifProfilView.as_view(), name='modification'),
+    path('modification/', ModifProfilView.as_view(), name='modification'),
 ]
