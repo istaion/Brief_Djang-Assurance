@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .permissions import StaffRequiredMixin
 from .forms import InscriptionForm, ModifProfilForm
 from .models import CustomUser
 from django.views import View

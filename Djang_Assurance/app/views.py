@@ -2,11 +2,13 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView, View
 from .forms import PredictionForm, UserPredictionForm, PredictionFilterForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from user.permissions import StaffRequiredMixin
 from .models import Prediction
 
 # Team Unicorn: Views for handling Predictions
 
-class PredictionView(CreateView):
+class PredictionView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     """
     Handles the creation of a new Prediction object.
     Uses the PredictionForm and redirects to the result page after saving.
@@ -32,7 +34,7 @@ class PredictionView(CreateView):
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)  # Redirect to the result page.
 
-class PredictionUpdateView(UpdateView):
+class PredictionUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     model = Prediction
     template_name = 'app/prediction_update.html'
     form_class = PredictionForm
@@ -54,14 +56,14 @@ class PredictionUpdateView(UpdateView):
         prediction_id = self.object.id
         return redirect('result', pk=prediction_id)  # Redirect to the result page.
     
-class PredictionDeleteView(DeleteView):
+class PredictionDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Prediction
     template_name = 'app/prediction_confirm_delete.html'
     success_url = reverse_lazy('results')
 
 
 
-class PredictionsListView(ListView, FormView):
+class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, FormView):
     """
     Vue combinée ListView et FormView pour afficher les prédictions avec
     options de filtrage et de tri.
@@ -143,7 +145,7 @@ class PredictionsListView(ListView, FormView):
 
 
 
-class ResultView(DetailView):
+class ResultView(LoginRequiredMixin, StaffRequiredMixin, DetailView):
     """
     Displays the details of a single Prediction object.
     """
@@ -155,7 +157,7 @@ class ResultView(DetailView):
 # Views for User-specific Predictions
 
 
-class UserPredictionView(View):
+class UserPredictionView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         try:
             # Vérifie si une prédiction existe pour l'utilisateur
@@ -165,7 +167,7 @@ class UserPredictionView(View):
             # Sinon, redirige vers 'user_create'
             return redirect('user_create')
 
-class UserCreatePredictionView(CreateView):
+class UserCreatePredictionView(LoginRequiredMixin, CreateView):
     """
     Handles the creation of a new Prediction object for a user.
     Uses the UserPredictionForm and excludes fields like `reg_model` and `result`.
@@ -192,7 +194,7 @@ class UserCreatePredictionView(CreateView):
         return redirect('user_result', pk=prediction_id)  # Redirect to the user-specific result page.
 
 
-class UserResultView(DetailView):
+class UserResultView(LoginRequiredMixin, DetailView):
     """
     Displays the details of a single Prediction object created by a user.
     """
@@ -200,7 +202,7 @@ class UserResultView(DetailView):
     template_name = 'app/user_result.html'
     context_object_name = 'prediction'  # Use 'prediction' as the context variable in the template.
 
-class UserPredictionUpdateView(UpdateView):
+class UserPredictionUpdateView(LoginRequiredMixin, UpdateView):
     model = Prediction
     template_name = 'app/user_prediction_update.html'
     form_class = UserPredictionForm

@@ -8,12 +8,12 @@ from .models import Reg_model, Prediction
 def after_migrations(sender, **kwargs):
     if not Reg_model.objects.all():
         # Créer les modèles
-        Reg_model.objects.create(name = "linéaire basique", path="/basic_linreg_model.pkl")
-        Reg_model.objects.create(name = "Gradient boosting", path="/gb_model.pkl")
-        Reg_model.objects.create(name = "linéaire", path="/linreg_model.pkl")
-        Reg_model.objects.create(name = "random forest", path="/rf_model.pkl")
-        Reg_model.objects.create(name = "ridge_model", path="/ridge_model.pkl")
-        Reg_model.objects.create(name = "lasso model", path="/best_lasso_model.pkl")
+        Reg_model.objects.create(name = "linéaire basique", path="app/regression/models/basic_linreg_model.pkl")
+        Reg_model.objects.create(name = "Gradient boosting", path="app/regression/models/gb_model.pkl")
+        Reg_model.objects.create(name = "linéaire", path="app/regression/models/linreg_model.pkl")
+        Reg_model.objects.create(name = "random forest", path="app/regression/models/rf_model.pkl")
+        Reg_model.objects.create(name = "ridge_model", path="app/regression/models/ridge_model.pkl")
+        Reg_model.objects.create(name = "lasso model", path="app/regression/models/best_lasso_model.pkl")
 
         # Créer des utilisateurs
         superuser = CustomUser.objects.create_user(username='superuser', prenom='super', nom='user', password='password', is_staff=True, is_superuser = True)
