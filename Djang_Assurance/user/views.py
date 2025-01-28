@@ -78,5 +78,3 @@ class ModifProfilView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class NewsView(TemplateView):
-    template_name = 'news.html'

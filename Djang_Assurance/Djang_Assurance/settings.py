@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'theme',
     'tailwind',
     'widget_tweaks',
+    'infos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
