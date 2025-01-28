@@ -7,6 +7,15 @@
 </head>
 <body>
     <h1>Agenda de la semaine</h1>
+
+    <!-- Navigation -->
+    <div>
+        <a href="{% url 'agenda_by_date' week_start_date=previous_week|date:"Y-m-d" %}">Semaine précédente</a>
+        <span>{{ week_start_date|date:"d/m/Y" }} - {{ next_week|date:"d/m/Y" }}</span>
+        <a href="{% url 'agenda_by_date' week_start_date=next_week|date:"Y-m-d" %}">Semaine suivante</a>
+    </div>
+
+    <!-- Tableau de l'agenda -->
     <table border="1">
         <thead>
             <tr>
@@ -21,13 +30,12 @@
                 <tr>
                     <td>{{ day_name }}</td>
                     {% for slot in time_slots %}
-                        <td>
                             {% for entry in agenda %}
                                 {% if entry.day == day and entry.slot == slot %}
                                     {% if entry.state == 'Disponible' %}
-                                        Disponible
+                                        <td>Disponible</td>
                                     {% else %}
-                                        {{ entry.state }}
+                                        <td>{{ entry.state }}</td>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
@@ -37,5 +45,4 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
 </html>

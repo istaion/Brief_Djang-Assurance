@@ -10,10 +10,6 @@ from django.views.generic import TemplateView
 from django.utils.timezone import localdate
 from .models import Availability, Appointment, StaffUser
 
-from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.utils.timezone import localdate
-from .models import Availability, Appointment, StaffUser
 
 class StaffAgendaView(TemplateView):
     template_name = 'meetings/meetings_list.html'
@@ -24,12 +20,24 @@ class StaffAgendaView(TemplateView):
         # Récupérer l'utilisateur authentifié
         staff_user = StaffUser.objects.get(user=self.request.user)
         
+        # Récupérer la date de début de la semaine
+        week_start_date = kwargs.get('week_start_date')
+        
+        if not week_start_date:
+            # Si pas de date dans l'URL, on prend la date de la semaine en cours
+            week_start_date = timezone.now().date() - timedelta(days=timezone.now().weekday())
+        else:
+            # Convertir la date de début de semaine en objet date
+            week_start_date = timezone.datetime.strptime(week_start_date, '%Y-%m-%d').date()
+
+        # Calculer la fin de la semaine
+        week_end_date = week_start_date + timedelta(days=6)
+
         # Récupérer les disponibilités du StaffUser pour la semaine
         availabilities = Availability.objects.filter(staff_user=staff_user)
-        print(availabilities)
-        
+
         # Récupérer les rendez-vous déjà pris pour le StaffUser sur la semaine
-        appointments = Appointment.objects.filter(staff_user=staff_user, date__gte=localdate())
+        appointments = Appointment.objects.filter(staff_user=staff_user, date__range=[week_start_date, week_end_date])
 
         # Préparer le contexte pour le template
         week_days = [0, 1, 2, 3, 4, 5, 6]  # Lundi à Dimanche
@@ -42,7 +50,7 @@ class StaffAgendaView(TemplateView):
         for day in week_days:
             for slot in time_slots:
                 # Initialiser l'état à "Disponible"
-                state = "Indisponible"
+                state = ""
                 
                 # Vérifier si ce créneau correspond à une disponibilité
                 availability = availabilities.filter(
@@ -50,7 +58,6 @@ class StaffAgendaView(TemplateView):
                     start_time__lte=slot,
                     end_time__gte=slot,
                 ).first()
-                print(availability)
                 if availability:
                     state = "Disponible"
                 
@@ -59,7 +66,6 @@ class StaffAgendaView(TemplateView):
                     date__week_day=day + 1,  # Django utilise 1 pour Lundi, 7 pour Dimanche
                     start_time=slot,
                 ).first()
-                print(appointment)
                 if appointment:
                     state = appointment.user.username  # Afficher le username du client
 
@@ -68,14 +74,15 @@ class StaffAgendaView(TemplateView):
                     'slot': slot,
                     'state': state
                 })
-                print(agenda)
 
         # Ajouter les variables au contexte
         context['agenda'] = agenda
         context['days_of_week'] = Availability.DAYS_OF_WEEK
         context['time_slots'] = time_slots
+        context['week_start_date'] = week_start_date
+        context['previous_week'] = week_start_date - timedelta(days=7)
+        context['next_week'] = week_start_date + timedelta(days=7)
         return context
-
 
 # class StaffAgendaView(TemplateView):
 #     template_name = 'meetings/meetings_list.html'

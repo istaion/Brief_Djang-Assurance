@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     adresse = models.TextField(null=True, blank=True)
 
 class StaffUser(models.Model):
-    img = models.FilePathField(path='user/media/', null=True)
+    img = models.ImageField(upload_to='staff_users/', null=True, blank=True)
     user = models.OneToOneField(
         CustomUser, 
         on_delete=models.CASCADE,  # Supprime le StaffUser si CustomUser est supprimé
