@@ -5,6 +5,7 @@ from .models import CustomUser, StaffUser
 # Signal post-save pour créer automatiquement un StaffUser
 @receiver(post_save, sender=CustomUser)
 def create_staff_user(sender, instance, created, **kwargs):
+    print("signal user C'est aussi laaaaaaaaaaaaaaaaaaa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if instance.is_staff:
         # Vérifie si un StaffUser correspondant existe déjà
         StaffUser.objects.get_or_create(

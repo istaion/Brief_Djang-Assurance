@@ -1,10 +1,52 @@
-<h1>Mes Rendez-vous</h1>
-<ul>
-    {% for meeting in object_list %}
-        <li>
-            <strong>{{ meeting.subject }}</strong> avec {{ meeting.staff_member }}
-            le {{ meeting.date|date:"d/m/Y H:i" }}
-        </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'meeting_create' %}">Prendre un rendez-vous</a>
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda - {{ staff_user.user.username }}</title>
+</head>
+<body>
+    <h1>Agenda de {{ staff_user.user.username }}</h1>
+
+    <h2>Semaine du {{ start_of_week }} au {{ end_of_week }}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Lundi</th>
+                <th>Mardi</th>
+                <th>Mercredi</th>
+                <th>Jeudi</th>
+                <th>Vendredi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for day in availabilities_by_day %}
+                    <td>
+                        <h3>{{ day }}</h3>
+                        <ul>
+                            {% for availability in availabilities_by_day|get_item:day %}
+                                <li>{{ availability.start_time }} - {{ availability.end_time }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <h4>Rendez-vous</h4>
+                        <ul>
+                            {% if appointments_by_day|get_item:day %}
+                                {% for appointment in appointments_by_day|get_item:day %}
+                                    <li>{{ appointment.user }} : {{ appointment.start_time }} - {{ appointment.end_time }}</li>
+                                {% endfor %}
+                            {% else %}
+                                <li>Aucun rendez-vous</li>
+                            {% endif %}
+                        </ul>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

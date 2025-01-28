@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Choisissez un StaffUser</h1>
+<ul>
+    {% for staff_user in staff_users %}
+    <li>
+        <a href="{% url 'select_date' staff_user.user.id %}">{{ staff_user.user.prenom }} {{ staff_user.user.nom }} </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

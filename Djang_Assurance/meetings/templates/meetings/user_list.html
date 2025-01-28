@@ -1,0 +1,24 @@
+<!-- user_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Mes Rendez-vous</h1>
+
+  {% if user_appointments %}
+    <ul>
+      {% for appointment in user_appointments %}
+        <li>
+          <strong>{{ appointment.staff_user.user.username }}</strong> - 
+          {{ appointment.date }} à {{ appointment.start_time }} - 
+          {{ appointment.end_time }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Vous n'avez pas encore de rendez-vous.</p>
+  {% endif %}
+
+  <p>
+    <a href="{% url staff_list_url %}">Voir la liste des StaffUser pour prendre un nouveau rendez-vous</a>
+  </p>
+{% endblock %}

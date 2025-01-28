@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+
+    <label for="start_time">Choisir l'heure :</label>
+    <select name="start_time" id="start_time" required>
+        {% for time in available_timeslots %}
+            <option value="{{ time|date:"H:i" }}">{{ time|date:"H:i" }}</option>
+        {% empty %}
+            <option>Aucun créneau disponible</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Réserver</button>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</form>
+
+{% endblock %}

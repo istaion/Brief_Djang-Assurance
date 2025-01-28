@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'theme',
     'tailwind',
     'meetings',
-    'django_agenda',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
