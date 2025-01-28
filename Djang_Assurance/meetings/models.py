@@ -11,6 +11,13 @@ class Availability(AbstractAvailability):
     class AgendaMeta:
         schedule_model = StaffUser
         schedule_field = "staff"
+        start_date = models.DateField()  # type: date
+        start_time = models.TimeField()  # type: datetime.time
+        end_time = models.TimeField()  # type: datetime.time
+        recurrence = RecurrenceField()
+        created_at = models.DateTimeField(auto_now_add=True)
+        updated_at = models.DateTimeField(auto_now=True)
+        timezone = TimeZoneField()
 
 
 class AvailabilityOccurrence(AbstractAvailabilityOccurrence):
