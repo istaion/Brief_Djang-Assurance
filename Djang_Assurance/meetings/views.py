@@ -6,62 +6,189 @@ from datetime import datetime, timedelta
 from django.views import View
 from user.models import StaffUser
 from django.core.exceptions import ValidationError
+from django.views.generic import TemplateView
+from django.utils.timezone import localdate
+from .models import Availability, Appointment, StaffUser
 
+from django.shortcuts import render
+from django.views.generic import TemplateView
+from django.utils.timezone import localdate
+from .models import Availability, Appointment, StaffUser
 
 class StaffAgendaView(TemplateView):
     template_name = 'meetings/meetings_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        # Récupérer l'utilisateur authentifié
+        staff_user = StaffUser.objects.get(user=self.request.user)
+        
+        # Récupérer les disponibilités du StaffUser pour la semaine
+        availabilities = Availability.objects.filter(staff_user=staff_user)
+        print(availabilities)
+        
+        # Récupérer les rendez-vous déjà pris pour le StaffUser sur la semaine
+        appointments = Appointment.objects.filter(staff_user=staff_user, date__gte=localdate())
 
-        # Assumons qu'on a déjà l'ID du StaffUser dans l'URL ou la session
-        staff_user = self.request.user.staffuser  # Récupère le StaffUser lié à l'utilisateur connecté
+        # Préparer le contexte pour le template
+        week_days = [0, 1, 2, 3, 4, 5, 6]  # Lundi à Dimanche
+        time_slots = [f"{hour}:00" for hour in range(9, 19)]  # Créneaux de 9h à 18h
 
-        # Récupérer la date actuelle et calculer le début et la fin de la semaine
-        today = timezone.now().date()
-        start_of_week = today - timedelta(days=today.weekday())  # Lundi de cette semaine
-        end_of_week = start_of_week + timedelta(days=6)  # Dimanche de cette semaine
+        # Initialiser une liste pour l'agenda
+        agenda = []
 
-        # Récupérer les disponibilités du StaffUser pour cette semaine
-        availabilities = Availability.objects.filter(
-            staff_user=staff_user,
-            day_of_week__gte=start_of_week.weekday(),
-            day_of_week__lte=end_of_week.weekday(),
-        )
+        # Remplir l'agenda avec les disponibilités
+        for day in week_days:
+            for slot in time_slots:
+                # Initialiser l'état à "Disponible"
+                state = "Indisponible"
+                
+                # Vérifier si ce créneau correspond à une disponibilité
+                availability = availabilities.filter(
+                    day_of_week=day,
+                    start_time__lte=slot,
+                    end_time__gte=slot,
+                ).first()
+                print(availability)
+                if availability:
+                    state = "Disponible"
+                
+                # Vérifier si un rendez-vous a été pris
+                appointment = appointments.filter(
+                    date__week_day=day + 1,  # Django utilise 1 pour Lundi, 7 pour Dimanche
+                    start_time=slot,
+                ).first()
+                print(appointment)
+                if appointment:
+                    state = appointment.user.username  # Afficher le username du client
 
-        # Récupérer les rendez-vous réservés pour cette semaine
-        appointments = Appointment.objects.filter(
-            staff_user=staff_user,
-            date__gte=start_of_week,
-            date__lte=end_of_week,
-        )
+                agenda.append({
+                    'day': day,
+                    'slot': slot,
+                    'state': state
+                })
+                print(agenda)
 
-        # Organiser les rendez-vous par jour
-        appointments_by_day = {}
-        for appointment in appointments:
-            day = appointment.date
-            if day not in appointments_by_day:
-                appointments_by_day[day] = []
-            appointments_by_day[day].append(appointment)
-
-        # Organiser les disponibilités par jour
-        availabilities_by_day = {}
-        for availability in availabilities:
-            day = start_of_week + timedelta(days=availability.day_of_week)
-            if day not in availabilities_by_day:
-                availabilities_by_day[day] = []
-            availabilities_by_day[day].append(availability)
-
-        # Ajouter ces données au contexte pour les rendre disponibles dans le template
-        context.update({
-            'staff_user': staff_user,
-            'appointments_by_day': appointments_by_day,
-            'availabilities_by_day': availabilities_by_day,
-            'start_of_week': start_of_week,
-            'end_of_week': end_of_week,
-        })
-
+        # Ajouter les variables au contexte
+        context['agenda'] = agenda
+        context['days_of_week'] = Availability.DAYS_OF_WEEK
+        context['time_slots'] = time_slots
         return context
+
+
+# class StaffAgendaView(TemplateView):
+#     template_name = 'meetings/meetings_list.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         # Récupérer le StaffUser connecté
+#         staff_user = self.request.user.staffuser
+
+#         # Gestion de la navigation entre semaines
+#         week_offset = int(self.request.GET.get('week', 0))
+#         today = now().date()
+#         start_of_week = today + timedelta(days=week_offset * 7 - today.weekday())  # Début de la semaine (lundi)
+#         end_of_week = start_of_week + timedelta(days=6)  # Fin de la semaine (dimanche)
+
+#         # Création de la liste des jours de la semaine
+#         week_days = [start_of_week + timedelta(days=i) for i in range(7)]
+
+#         # Heures de la journée (par exemple de 8h à 17h)
+#         hours = [f"{hour}:00" for hour in range(8, 18)]
+
+#         # Récupérer les rendez-vous réservés pour cette semaine
+#         appointments = Appointment.objects.filter(
+#             staff_user=staff_user,
+#             date__gte=start_of_week,
+#             date__lte=end_of_week,
+#         )
+
+#         # Récupérer les disponibilités du StaffUser pour cette semaine
+#         availabilities = Availability.objects.filter(
+#             staff_user=staff_user,
+#             day_of_week__gte=start_of_week.weekday(),
+#             day_of_week__lte=end_of_week.weekday(),
+#         )
+
+#         # Organiser les rendez-vous par jour et heure
+#         appointments_by_day_hour = {}
+#         for appointment in appointments:
+#             key = (appointment.date, appointment.start_time.strftime('%H:%M'))
+#             appointments_by_day_hour[key] = appointment
+
+#         # Ajouter au contexte les données nécessaires pour le template
+#         context.update({
+#             'staff_user': staff_user,
+#             'week_days': week_days,
+#             'hours': hours,
+#             'appointments_by_day_hour': appointments_by_day_hour,
+#             'availabilities': availabilities,
+#             'start_of_week': start_of_week,
+#             'end_of_week': end_of_week,
+#             'previous_week': week_offset - 1,
+#             'next_week': week_offset + 1,
+#         })
+
+#         return context
+
+
+
+# class StaffAgendaView(TemplateView):
+#     template_name = 'meetings/meetings_list.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         # Assumons qu'on a déjà l'ID du StaffUser dans l'URL ou la session
+#         staff_user = self.request.user.staffuser  # Récupère le StaffUser lié à l'utilisateur connecté
+
+#         # Récupérer la date actuelle et calculer le début et la fin de la semaine
+#         today = timezone.now().date()
+#         start_of_week = today - timedelta(days=today.weekday())  # Lundi de cette semaine
+#         end_of_week = start_of_week + timedelta(days=6)  # Dimanche de cette semaine
+
+#         # Récupérer les disponibilités du StaffUser pour cette semaine
+#         availabilities = Availability.objects.filter(
+#             staff_user=staff_user,
+#             day_of_week__gte=start_of_week.weekday(),
+#             day_of_week__lte=end_of_week.weekday(),
+#         )
+
+#         # Récupérer les rendez-vous réservés pour cette semaine
+#         appointments = Appointment.objects.filter(
+#             staff_user=staff_user,
+#             date__gte=start_of_week,
+#             date__lte=end_of_week,
+#         )
+
+#         # Organiser les rendez-vous par jour
+#         appointments_by_day = {}
+#         for appointment in appointments:
+#             day = appointment.date
+#             if day not in appointments_by_day:
+#                 appointments_by_day[day] = []
+#             appointments_by_day[day].append(appointment)
+
+#         # Organiser les disponibilités par jour
+#         availabilities_by_day = {}
+#         for availability in availabilities:
+#             day = start_of_week + timedelta(days=availability.day_of_week)
+#             if day not in availabilities_by_day:
+#                 availabilities_by_day[day] = []
+#             availabilities_by_day[day].append(availability)
+
+#         # Ajouter ces données au contexte pour les rendre disponibles dans le template
+#         context.update({
+#             'staff_user': staff_user,
+#             'appointments_by_day': appointments_by_day,
+#             'availabilities_by_day': availabilities_by_day,
+#             'start_of_week': start_of_week,
+#             'end_of_week': end_of_week,
+#         })
+
+#         return context
 
 
 class StaffUserListView(ListView):
