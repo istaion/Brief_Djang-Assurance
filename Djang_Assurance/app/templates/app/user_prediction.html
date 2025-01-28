@@ -3,13 +3,14 @@
 {% load static tailwind_tags %}
 
 {% block content%}
-<body>
-    <p>Bonjour {{request.user}}</p>
-    <h2>Cher utilisateur veuillez rentrer vos données : </h2>
-    <form method="post">
+<div class="bg-white justify-center px-20">
+    <p class="text-xl font-bold">Bonjour {{request.user}}</p>
+    <h2 class="text-lg font-semibold">Veuillez rentrer vos données : </h2>
+    <form method="post" class="mb-4">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit" class="btn text-xl">Rechercher</button>
+        <br></br>
+        <button type="submit" class="btn text-lg">Rechercher</button>
     </form>
-</body>
+</div>
 {% endblock %}
