@@ -3,12 +3,12 @@
 
 {% block content %}
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Inscription</h1>
+    <div class="container mt-5 bg-white">
+        <h1 class="text-center text-2xl font-bold">Inscription</h1>
         <form method="post" class="card p-4 shadow mx-auto" style="max-width: 500px;">
             {% csrf_token %}
             {% for field in form %}
-                <div class="mb-3">
+                <div class="mb-4">
                     {{ field.label_tag }}
                     {{ field }}
                     {% if field.errors %}
@@ -16,7 +16,7 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button type="submit" class="btn btn-success w-100">S'inscrire</button>
+            <button type="submit" class="btn text-xl">S'inscrire</button>
         </form>
     </div>
 </body>

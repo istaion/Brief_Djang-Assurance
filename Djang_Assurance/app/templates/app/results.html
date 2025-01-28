@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction</title>
-</head>
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
 <body>
     <p>Par ici la moula :</p>
     <h1>Liste des Prédictions</h1>
@@ -12,7 +10,7 @@
 
     <form method="get">
         {{ form.as_p }}
-        <button type="submit">Filtrer</button>
+        <button type="submit" class="btn text-xl">Filtrer</button>
     </form>
 
     <!-- Tableau des prédictions -->
@@ -58,4 +56,4 @@
 
     <a href="{% url 'prediction' %}">Réaliser une autre prédiction</a>
 </body>
-</html>
+{% endblock %}
