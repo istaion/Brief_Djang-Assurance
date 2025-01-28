@@ -24,4 +24,5 @@ urlpatterns = [
     path('meetings/', include('meetings.urls')),
     path('infos/', include('infos.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
+    
 ]
