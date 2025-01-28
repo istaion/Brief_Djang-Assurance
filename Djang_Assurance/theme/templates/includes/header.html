@@ -36,7 +36,7 @@
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <form method="POST" action="{% url 'deconnexion' %}" style="display: inline;">
           {% csrf_token %}
-          <button type="submit" class="btn btn-danger">logout</button>
+          <button type="submit" class="text-sm font-semibold text-gray-900">logout</button>
         </form>
       </div>
       {% else %} 

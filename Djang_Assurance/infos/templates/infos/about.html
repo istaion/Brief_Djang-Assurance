@@ -1,0 +1,48 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about</title>
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+</head>
+
+{% block content%}
+
+<div class="bg-white-100 min-h-screen p-8">
+    <div class="mb-8 bg-white">
+        <h1 class="text-3xl font-bold text-center text-indigo-600">A propos de nous</h1>
+        {% comment %} <p class="text-left text-gray-700 mt-2">Assur'AImant</p> {% endcomment %}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Article 1 -->
+        <a class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
+            <h2 class="text-xl font-bold text-gray-800">Assur'AImant : le choix du coeur</h2>
+            <p class="text-gray-600 mt-2 justify-center">Assur'AImant est une assurance fondée en 1312 par 3 licornes éclairées. Ces licornes cherchaient un moyen d'aider les gens sans pour autant que cela soit perçu comme de la charité. Après moult réflexions, elles ont créée une sorte de cagnotte à laquelle les gens cotisaient. Les gens dans le besoin de voir un médecin ou un druide, pouvaient utiliser l'argent de la cagnotte. C'est ainsi que ces 3 licornes ont créé le concept de mutuelle. </p>
+            <p class="text-gray-600 mt-2 justify-center">Les diverses révolutions, guerre et chasse à l'ivoire ont éteint les licornes dans les années 80. Avec l'aide d'un collectif composés d'historiens et de fervents défenseurs des licornes, les archives ont été mise à jour, révélant tous ses trésors d'humanité. Aujourd'hui, ces grands principes ont été réutilisés afin de générer des profits. 🙂</p>
+
+        </a>
+
+        <!-- Article 2 -->
+        <a class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
+            <h2 class="text-xl font-bold text-gray-800">Nos valeurs</h2>
+            <p class="text-gray-600 mt-2">Nos valeurs sont centrées autour de la bienveillance, la confiance et la solidarité. Ces trois mots d'ordre dictent les choix stratégiques de l'entreprise. </p>
+            <p class="text-gray-600 mt-2 justify-center">La confiance est capitale entre les adhérents et leur assurance. Pour consolider ce lien, des rencontres sont réalisées régulièrement et toutes personnes souhaitant rencontrer un conseiller peut le faire dans un délai de maximum 7 jours, c'est notre engagement</p>
+            <p class="text-gray-600 mt-2 justify-center">La bienveillance est également toujours de mise. En effet notre assurance ne définit pas le prix de son assurance sur les antécédents médicaux, mais bien sur leurs comportements à risques. Lors des rendez-vous, des solutions sont également toujours proposées en toute gentillesse pour les aider à réduire la facture</p>
+            <p class="text-gray-600 mt-2 justify-center">Enfin, on place la solidarité dans nos piliers, puisque la mutuelle a été créé sur ce principe et permets aujourd'hui de continuer à aider les gens à se soigner. Chez Assur'Aimant, ce n'est pas les conseillers qui prennent toutes les décisions. Il n'y a pas non plus d'actionnaires obscures pour imposer des décisions. En revanche un conseil composés d'adhérents et de conseillers se réunit tous les soirs de pleine lune et prends des décisions collectives par le biais du vote.</p>
+        </a>
+
+        <!-- Article 3 -->
+        <a class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
+            <h2 class="text-xl font-bold text-gray-800">La team du Unicorn Power</h2>
+            <p class="text-gray-600 mt-2">Cette filliale de Assur'AImant est composée de trois licornes développeuses full-stack IA. Passionnées de technologies et de numériques, elles ont choisi d'ouvrir une filliale et de se spécialiser dans le développement et l'IA au sein du groupe Assur'AImant. Elles répondent à des appels à projets externes lorsque les valeurs portées par les projets sont en adéquation avec les valeurs de Assur'AImant. N'hésitez pas à les contacter si besoin 🙂!</p>
+        </a>
+    </div>
+</div>
+
+{% endblock %}
