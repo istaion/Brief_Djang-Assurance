@@ -1,26 +1,27 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<head>
     <title>Django Tailwind</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		{% tailwind_css %}
-		{% include "includes/header.html" %}
-	</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% tailwind_css %}
+    {% include "includes/header.html" %}
+</head>
 
-	<body class="bg-center bg-no-repeat bg-cover" style="
-		background-image: url('{% static "/css/dist/Coloriage-licorne-cabree.webp" %}');
-		background-color: rgba(255, 255, 255, 0.5);
-		background-position: center;
-		background-repeat: no;
-		background-size: contain;
-		height: 100vh; /* Taille de la page en hauteur */
-		opacity: 0.95;
-		z-index: -1;
-		background-blend-mode: luminosity;">
-		
+<body class="bg-center bg-no-repeat bg-cover" style="
+    background-image: url('{% static "/css/dist/Coloriage-licorne-cabree.webp" %}');
+    background-color: rgba(255, 239, 239, 0.95); /* Teinte pastel rose clair avec moins de transparence */
+    background-position: center;
+    background-repeat: no;
+    background-size: contain;
+    height: 100vh; /* Taille de la page en hauteur */
+    opacity: 0.95; /* Réduction de la transparence */
+    z-index: -1;
+    background-blend-mode: luminosity;
+    filter: brightness(0.97); /* Légèrement plus lumineux pour un effet doux */
+">
     <main>
         <!-- Bloc pour afficher les messages -->
         {% if messages %}
@@ -35,6 +36,7 @@
         
         {% block content %}{% endblock %}
     </main>	
-	</body>
-	{% include "includes/footer.html" %}
+</body>
+
+{% include "includes/footer.html" %}
 </html>
