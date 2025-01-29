@@ -47,6 +47,8 @@
     </form> {% endcomment %}
     <div class="container mt-5">
         <h1 class="text-center">Contactez-nous</h1>
+    <div class="container mt-5 bg-white">
+        <h1 class="text-center font-bold text-xl">Contactez-nous</h1>
         <form method="post" class="card p-4 shadow mx-auto" style="max-width: 500px;">
             {% csrf_token %}
             {% for field in form %}
@@ -67,7 +69,9 @@
         <ul class="list-disc pl-6">
             <li>Téléphone : <a href="tel:+33123456789" class="text-blue-600 underline">+33 1 23 45 67 89</a></li>
             <li>Email : <a href="mailto:contact@nomdelentreprise.com" class="text-blue-600 underline">contact_assuraimant@assuraimant.com</a></li>
-            <li>Adresse : <span class="font-medium">6 Rue Emile Moreau, 59100 Roubaix</span></li>
+            <li>Adresse : <span class="font-medium">6 Rue Emile Moreau, 59100 Roubaix</span>
+            <a href="https://www.google.fr/maps/place/6+Rue+Emile+Moreau,+59100+Roubaix/@50.6953199,3.1699341,16z/data=!3m1!4b1!4m6!3m5!1s0x47c328e962dc70e1:0x442616cbeb940545!8m2!3d50.6953165!4d3.1725037!16s%2Fg%2F11c1_ffjv7?entry=ttu&g_ep=EgoyMDI1MDEyNi4wIKXMDSoASAFQAw%3D%3D">🗺️</a>
+            </li>
         </ul>
     </div>
 </div>

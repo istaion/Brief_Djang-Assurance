@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% load  widget_tweaks %}
+{% comment %} {% load  widget_tweaks %} {% endcomment %}
 {% load static tailwind_tags %}
 
 <!DOCTYPE html>
@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>news</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
 </head>
 
@@ -19,24 +20,26 @@
         <p class="text-center text-orange-700 mt-2">Découvrez les astuces pour améliorer votre santé et celle de votre compte en banque</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
         <!-- Article 1 -->
         <a href="https://www.santemagazine.fr/actualites/actualites-sante/voici-7-facons-surprenantes-de-faire-de-2025-une-annee-en-bonne-sante-1109118" target="résolutions" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
             <h2 class="text-xl font-bold text-orange-800">Les résolutions de 2025</h2>
             <p class="text-gray-600 mt-2">Les 7 conseils de l'année 2025 côté santé d'après Santé magazine, le nécessaire pour commencer l'année du bon sabot !</p>
         </a>
-
-        <!-- Article 2 -->
-        <a href="https://www.banquemondiale.org/fr/news/press-release/2025/01/16/gep-january-2025-press-release" target="économie" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
-            <h2 class="text-xl font-bold text-orange-800">Economie : à quoi s'attendre en 2025?</h2>
-            <p class="text-gray-600 mt-2">Après une année 2024 compliquée, le soleil semble se lever sur le ciel de l'économie mondiale... Enfin surtout pour les pays riches. Ne passer pas à côté de cet article si vous ne voulez pas perdre d'argents en investissant dans un pays en développement !<p>
-        </a>
-
-        <!-- Article 3 -->
+<!-- Article 3 -->
         <a href="https://www.topsante.com/minceur/regimes-minceur/autres-regimes/meilleur-regime-2023-629983" target="régimes" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">
             <h2 class="text-xl font-bold text-orange-800">Contrôlez votre poids, contrôlez le prix de votre assurance </h2>
-            <p class="text-gray-600 mt-2">Top santé vous propose comme chaque année le classement des meilleurs régimes à suivre. Vous voulez retrouver votre corps de licorne de rêve ? Allez-y jeter un oeil !</p>
+            <p class="text-gray-600 mt-2">
+                Top santé vous propose comme chaque année le classement des meilleurs régimes à suivre. Vous voulez retrouver votre corps de licorne de rêve ? Allez-y jeter un oeil !
+            </p>
+        </a>        
+        <!-- Article 2 -->
+        <a href="https://www.banquemondiale.org/fr/news/press-release/2025/01/16/gep-january-2025-press-release" target="économie" class="block bg-white rounded-lg  p-6 hover:shadow-lg transition transform hover:-translate-y-1">
+            <h2 class="text-xl font-bold text-orange-800">Economie : à quoi s'attendre en 2025?</h2>
+            <p class="text-gray-600 mt-2">Après une année 2024 compliquée, le soleil semble se lever sur le ciel de l'économie mondiale... Enfin surtout pour les pays riches. Ne passer pas à côté de cet article si vous ne voulez pas perdre d'argents en investissant dans un pays en développement !</p>
         </a>
+
+        
 
         <!-- Article 4 -->
         <a href="https://fr.wikipedia.org/wiki/Chasse_%C3%A0_la_licorne" target="chasse" class="block bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:-translate-y-1">

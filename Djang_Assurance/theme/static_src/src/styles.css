@@ -22,31 +22,7 @@
         border-radius: 0.25rem; /* Coins arrondis */
         line-height: 20px;
     }
-    .mb-4 select {
-        width: 100%; /* Assure que les champs occupent toute la largeur disponible */
-        padding: 0.5rem; /* Ajoute un espace intérieur aux champs */
-        border: 1px solid #ccc; /* Ajoute une bordure grise */
-        border-radius: 0.25rem; /* Coins arrondis */
-        line-height: 20px;
-        background-color: #fff; /* Fond blanc */
-        color: #333; /* Couleur du texte */
-    }
-    
-    .mb-4 select {
-        appearance: none; /* Supprime l'apparence native des menus déroulants */
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 1.25rem;
-        padding-right: 2rem; /* Ajoute un espace pour l'icône */
-    }
-    
-    .mb-4 select[multiple] {
-        height: auto; /* Permet à la hauteur de s'adapter au contenu */
-        min-height: 120px; /* Définit une hauteur minimale */
-        overflow-y: auto; /* Active le défilement vertical si nécessaire */
-    }
-    
+
     /* .body {
         background-image: url("https://i0.wp.com/magicoloriage.com/wp-content/uploads/2024/08/Coloriage-licorne-cabree.jpg?fit=1080%2C1080&quality=89&ssl=1");
         background-repeat: no-repeat;
