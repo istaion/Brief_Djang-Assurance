@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView, View
 from .forms import PredictionForm, UserPredictionForm, PredictionFilterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from user.permissions import StaffRequiredMixin
+from user.permissions import StaffRequiredMixin, UserRequiredMixin
 from .models import Prediction
 
 # Team Unicorn: Views for handling Predictions
@@ -157,17 +157,17 @@ class ResultView(LoginRequiredMixin, StaffRequiredMixin, DetailView):
 # Views for User-specific Predictions
 
 
-class UserPredictionView(LoginRequiredMixin, View):
+class UserPredictionView(LoginRequiredMixin, UserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         try:
             # Vérifie si une prédiction existe pour l'utilisateur
-            prediction = Prediction.objects.get(user_id=request.user)
+            prediction = Prediction.objects.get(made_by=request.user)
             return redirect('user_result', pk=prediction.id)
         except Prediction.DoesNotExist:
             # Sinon, redirige vers 'user_create'
             return redirect('user_create')
 
-class UserCreatePredictionView(LoginRequiredMixin, CreateView):
+class UserCreatePredictionView(LoginRequiredMixin, UserRequiredMixin, CreateView):
     """
     Handles the creation of a new Prediction object for a user.
     Uses the UserPredictionForm and excludes fields like `reg_model` and `result`.
@@ -194,7 +194,7 @@ class UserCreatePredictionView(LoginRequiredMixin, CreateView):
         return redirect('user_result', pk=prediction_id)  # Redirect to the user-specific result page.
 
 
-class UserResultView(LoginRequiredMixin, DetailView):
+class UserResultView(LoginRequiredMixin, UserRequiredMixin, DetailView):
     """
     Displays the details of a single Prediction object created by a user.
     """
@@ -202,7 +202,7 @@ class UserResultView(LoginRequiredMixin, DetailView):
     template_name = 'app/user_result.html'
     context_object_name = 'prediction'  # Use 'prediction' as the context variable in the template.
 
-class UserPredictionUpdateView(LoginRequiredMixin, UpdateView):
+class UserPredictionUpdateView(LoginRequiredMixin, UserRequiredMixin, UpdateView):
     model = Prediction
     template_name = 'app/user_prediction_update.html'
     form_class = UserPredictionForm
