@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction</title>
-</head>
-<body>
-    <p>Par ici la moula :</p>
-    <h1>Liste des Prédictions</h1>
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
 
+{% block content%}
+<script src="https://cdn.tailwindcss.com"></script>
+<div class = "bg-white px-20">
+    
+    <h1 class="text-3xl text-center font-bold">Liste des Prédictions</h1>
+    <br></br>
 
-    <form method="get">
+    <form method="get" class="mb-4">
         {{ form.as_p }}
-        <button type="submit">Filtrer</button>
+        <br></br>
+        <button type="submit" class="btn text-lg">Filtrer</button>
     </form>
-
+    <br></br>
     <!-- Tableau des prédictions -->
-    <table border="1">
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400" border="1">
         <thead>
-            <tr>
+            <tr class="text-lg">
                 <th>ID</th>
                 <th>Utilisateur</th>
                 <th>Âge</th>
@@ -48,14 +48,14 @@
                     <td>{{ prediction.reg_model }}</td>
                     <td>{{ prediction.result }}</td>
                     <td>
-                        <a href="{% url 'result' prediction.id %}">Voir</a> |
-                        <a href="{% url 'prediction_delete' prediction.id %}">Supprimer</a>
+                        <a class="font-semibold text-orange-800" href="{% url 'result' prediction.id %}">Voir</a> |
+                        <a class="font-semibold text-orange-800" href="{% url 'prediction_delete' prediction.id %}">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{% url 'prediction' %}">Réaliser une autre prédiction</a>
+    <br></br>
+    <a class="text-lg font-bold" href="{% url 'prediction' %}"> ➜ Réaliser une autre prédiction</a>
 </body>
-</html>
+{% endblock %}

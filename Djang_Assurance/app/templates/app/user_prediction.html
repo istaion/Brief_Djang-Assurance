@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction</title>
-</head>
-<body>
-    <p>Bnjour {{request.user}}</p>
-    <h2>Cher utilisateur veuillez rentrer vos données : </h2>
-    <form method="post">
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+<div class="bg-white justify-center px-20">
+    <p class="text-xl font-bold">Bonjour {{request.user}}</p>
+    <h2 class="text-lg font-semibold">Veuillez rentrer vos données : </h2>
+    <form method="post" class="mb-4">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Rechercher</button>
+        <br></br>
+        <button type="submit" class="btn text-lg">Rechercher</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}

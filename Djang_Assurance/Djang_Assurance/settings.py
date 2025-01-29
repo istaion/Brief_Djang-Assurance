@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'tailwind',
     'meetings',
     'widget_tweaks',
+    'infos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
