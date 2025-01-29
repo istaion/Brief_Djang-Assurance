@@ -161,7 +161,7 @@ class UserPredictionView(LoginRequiredMixin, UserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         try:
             # Vérifie si une prédiction existe pour l'utilisateur
-            prediction = Prediction.objects.get(made_by=request.user)
+            prediction = Prediction.objects.get(made_by = request.user)
             return redirect('user_result', pk=prediction.id)
         except Prediction.DoesNotExist:
             # Sinon, redirige vers 'user_create'

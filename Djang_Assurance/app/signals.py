@@ -20,7 +20,7 @@ def after_migrations(sender, **kwargs):
 
         # Créer des utilisateurs
         print('Initialisation des utilisateurs...')
-        superuser = CustomUser.objects.create_user(username='superuser', prenom='super', nom='user', password='password', is_superuser = True)
+        superuser = CustomUser.objects.create_user(username='superuser', prenom='super', nom='user', password='password', is_staff=True, is_superuser = True)
         user1 = CustomUser.objects.create_user(username='JeanMichou', prenom='Jean', nom='Michou', password='password')
         user2 = CustomUser.objects.create_user(username='gisèle', prenom='gis', nom='elle', password='password')
         user3 = CustomUser.objects.create_user(username='ludivine', prenom='Lu', nom='Divine', password='password', is_staff=True)
