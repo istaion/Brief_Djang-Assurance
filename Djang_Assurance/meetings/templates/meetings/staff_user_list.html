@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Choisissez un StaffUser</h1>
+    {% for staff_user in staff_users %}
+    <div>
+        <a href="{% url 'select_date' staff_user.user.id %}"><h2>{{ staff_user.user.prenom }} {{ staff_user.user.nom }} {{ staff_user.img }} </h2></a>
+        {% if staff_user.img %}
+            <img src="{{ staff_user.img.url }}" alt="image de {{ staff_user.user.username }} ">
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endblock %}

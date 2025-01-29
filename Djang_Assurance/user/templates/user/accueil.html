@@ -3,13 +3,14 @@
 {% load static tailwind_tags %}
 
 {% block content%}
+<script src="https://cdn.tailwindcss.com"></script>
 <body>
-    <div class="container mt-16 bg-white min-h-screen">
+    <div class="bg-white">
         <br></br>
         <h1 class="text-3xl font-bold text-center">Bienvenue sur Assur'AImant</h1>
         <br></br>
         {% if user.is_authenticated %}
-            <p class="text-center">Bonjour {{ user.first_name }} {{ user.last_name }} !</p>
+            {% comment %} <p class="text-center">Bonjour {{ user.first_name }} {{ user.last_name }} !</p> {% endcomment %}
             <br></br>
             <div class="text-center text-xl">
                 <a href="{% url 'profil' %}" class="btn">Voir mon profil</a>
@@ -28,9 +29,6 @@
             </div>
         {% endif %}
     </div>
-
-    
-    <br></br>
     <div class="flex flex-wrap justify-center gap-8 p-8">
         <div class="bg-white border border-gray-300 w-72 shadow-md rounded-xl p-4">
             <p class="text-gray-600">
@@ -44,7 +42,7 @@
             </p>
             <div class="flex items-center mt-4">
                 <a href="#" class="relative block">
-                    <img alt="profil" src="/images/person/1.jpg" class="object-cover rounded-full h-10 w-10"/>
+                    <img alt="profil" src="{% static '/css/dist/michou.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
                 </a>
                 <div class="flex flex-col justify-between ml-2">
                     <span class="text-sm font-semibold text-indigo-500">
@@ -52,7 +50,7 @@
                     </span>
                     <span class="flex items-center text-xs text-gray-500">
                         Unicorner depuis 1982
-                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:20px; height:20px;"/>
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
                     </span>
                 </div>
             </div>
@@ -69,7 +67,7 @@
             </p>
             <div class="flex items-center mt-4">
                 <a href="#" class="relative block">
-                    <img alt="profil" src="/images/person/1.jpg" class="object-cover rounded-full h-10 w-10"/>
+                    <img alt="profil" src="{% static '/css/dist/gisele.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
                 </a>
                 <div class="flex flex-col justify-between ml-2">
                     <span class="text-sm font-semibold text-indigo-500">
@@ -77,7 +75,7 @@
                     </span>
                     <span class="flex items-center text-xs text-gray-500">
                         Unicorner depuis 2026
-                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:20px; height:20px;"/>
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
                     </span>
                 </div>
             </div>
@@ -94,7 +92,7 @@
             </p>
             <div class="flex items-center mt-4">
                 <a href="#" class="relative block">
-                    <img alt="profil" src="/images/person/1.jpg" class="object-cover rounded-full h-10 w-10"/>
+                    <img alt="profil" src="{% static '/css/dist/jean_miguel.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
                 </a>
                 <div class="flex flex-col justify-between ml-2">
                     <span class="text-sm font-semibold text-indigo-500">
@@ -102,7 +100,7 @@
                     </span>
                     <span class="flex items-center text-xs text-gray-500">
                         Unicorner depuis 2010
-                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:20px; height:20px;"/>
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
                     </span>
                 </div>
             </div>

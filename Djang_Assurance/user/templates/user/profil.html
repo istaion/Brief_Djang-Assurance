@@ -4,13 +4,13 @@
 {% block content %}
 <body>
     {% if request.user.is_staff %}
-    <div class="container mt-5 bg-white">
+    <div class="bg-white">
         <h1 class="text-center font-bold text-xl">Profil Licorne 🦄</h1>
         <div class="card mt-4">
             <div class="card-body">
                 <h4 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h4>
                 <br></br>
-                <p class="card-text">
+                <p class="card-text p-4">
                     <strong>Email :</strong> {{ user.email }}<br>
                     <strong>Âge :</strong> {{ user.age }} ans<br>
                     <strong>Adresse :</strong> {{ user.adresse }}<br>
@@ -21,18 +21,19 @@
                     <a href="{% url 'modification' %}" class="btn btn-info">Modifier mes informations</a>
                     <a href="{% url 'prediction' %}" class="btn btn-primary">Faire une prédiction</a>
                     <a href="{% url 'accueil' %}" class="btn btn-secondary">Retour à l'accueil</a>
+                    <a href="{% url 'agenda' %}" class="btn btn-secondary">Vos rendez vous</a>
                 </div>
                 <br></br>
             </div>
         </div>
     </div>
     {% else %}
-    <div class="container mt-5 bg-white">
-        <h1 class="text-center">Profil Utilisateur 🐴</h1>
+    <div class="bg-white">
+        <h1 class="text-center font-bold text-xl">Profil Utilisateur 🐴</h1>
         <div class="card mt-4">
             <div class="card-body">
                 <h4 class="card-title text-center">{{ user.first_name }} {{ user.last_name }}</h4>
-                <p class="card-text">
+                <p class="card-text p-4">
                     <strong>Email :</strong> {{ user.email }}<br>
                     <strong>Âge :</strong> {{ user.age }} ans<br>
                     <strong>Adresse :</strong> {{ user.adresse }}<br>
@@ -41,6 +42,7 @@
                     <a href="{% url 'modification' %}" class="btn btn-info">Modifier mes informations</a>
                     <a href="{% url 'user_create' %}" class="btn btn-primary">Faire une prédiction</a>
                     <a href="{% url 'accueil' %}" class="btn btn-secondary">Retour à l'accueil</a>
+                    <a href="{% url 'user_meeting_list' %}" class="btn btn-secondary">Vos rendez vous</a>
                 </div>
             </div>
         </div>

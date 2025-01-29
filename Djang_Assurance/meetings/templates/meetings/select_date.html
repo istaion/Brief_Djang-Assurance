@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Prendre rendez-vous avec {{ staff_user.user.get_full_name }}</h1>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <label for="date">Choisir la date :</label>
+    <input type="date" id="date" name="date" required>
+
+    <button type="submit">Choisir</button>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</form>
+
+
+{% endblock %}
