@@ -2,6 +2,8 @@ from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 from user.models import CustomUser, StaffUser
 from .models import Reg_model, Prediction
+from meetings.models import Appointment, Availability
+from datetime import date, time
 
 
 @receiver(post_migrate)
@@ -21,21 +23,28 @@ def after_migrations(sender, **kwargs):
         superuser = CustomUser.objects.create_user(username='superuser', prenom='super', nom='user', password='password', is_superuser = True)
         user1 = CustomUser.objects.create_user(username='JeanMichou', prenom='Jean', nom='Michou', password='password')
         user2 = CustomUser.objects.create_user(username='gisèle', prenom='gis', nom='elle', password='password')
-        user3 = CustomUser.objects.create_user(username='raouf', prenom='Ra', nom='Ouf', password='password', is_staff=True)
+        user3 = CustomUser.objects.create_user(username='ludivine', prenom='Lu', nom='Divine', password='password', is_staff=True)
+        user5 = CustomUser.objects.create_user(username='raouf', prenom='Ra', nom='Ouf', password='password', is_staff=True)
         user4 = CustomUser.objects.create_user(username='vic', prenom='vic', nom='tor', password='password', is_staff=True)
-        user5 = CustomUser.objects.create_user(username='ludivine', prenom='Lu', nom='Divine', password='password', is_staff=True)
         print('Initialisation des staffusers...')
         # 💡 On s'assure que le signal post_save a bien créé les StaffUser
+
         staff1, _ = StaffUser.objects.get_or_create(user=user3)
-        staff1.img = "staff_users/raouf_licorne.jpg"
+        staff1.img = "css/dist/ludi_licorne.jpg"
+        staff1.description = "Toujours rapide et efficace, Lu Divine est la conseillère idéale pour ceux qui veulent des réponses claires et précises sans perdre une minute. Son grand cœur et son approche bienveillante font d’elle une véritable alliée pour ses clients. Et en plus de son expertise en assurance, elle est une véritable as de la mécanique !"
+        staff1.title = "Conseillère en Assurance - Lu Divine"
         staff1.save()
 
         staff2, _ = StaffUser.objects.get_or_create(user=user4)
-        staff2.img = "staff_users/vic_licorne.jpg"
+        staff2.img = "css/dist/vic_licorne.jpg"
+        staff2.description = "Un brin tête en l'air mais débordante d’énergie positive, Vi Tor met des paillettes partout où elle passe ! Avec elle, même les démarches administratives deviennent plus fun et légères. Spécialiste en assurance et passionnée de maquillage, elle saura non seulement vous conseiller sur vos contrats mais aussi vous donner des astuces beauté."
+        staff2.title = "Conseillère en Assurance - Vi Tor"
         staff2.save()
 
         staff3, _ = StaffUser.objects.get_or_create(user=user5)
-        staff3.img = "staff_users/ludi_licorne.jpg"
+        staff3.img = "css/dist/raouf_licorne.jpg"
+        staff3.description = "Ra Ouf est le conseiller en assurance qui trouve toujours une solution. Son assurance inébranlable et son sang-froid légendaire font de lui un roc sur lequel ses clients peuvent compter. Peu importe l’obstacle, il est là pour le surmonter et vous guider en toute sérénité."
+        staff3.title = "Conseiller en Assurance - Ra Ouf"
         staff3.save()
 
         # # Créer des prédictions pour chaque utilisateur
@@ -51,5 +60,9 @@ def after_migrations(sender, **kwargs):
             pred.pred()  # Compute the prediction result.
             pred.fr_transform()  # Localize certain fields (e.g., sex, smoker).
             pred.save()
-        
+
+        print('Initialisation des rendez-vous...')
+        Appointment.objects.create(user = user1, staff_user = staff2, date = date(2025, 1, 30), start_time = time(14,0),end_time = time(15,0))
+        Appointment.objects.create(user = user1, staff_user = staff1, date = date(2025, 1, 30), start_time = time(13,0),end_time = time(14,0))
+        Appointment.objects.create(user = user1, staff_user = staff3, date = date(2025, 1, 30), start_time = time(15,0),end_time = time(16,0))
         print('Données initialisées avec succes !')

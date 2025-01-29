@@ -1,13 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
 
 {% block content %}
-<h1>Choisissez un StaffUser</h1>
-    {% for staff_user in staff_users %}
-    <div>
-        <a href="{% url 'select_date' staff_user.user.id %}"><h2>{{ staff_user.user.prenom }} {{ staff_user.user.nom }} {{ staff_user.img }} </h2></a>
-        {% if staff_user.img %}
-            <img src="{{ staff_user.img.url }}" alt="image de {{ staff_user.user.username }} ">
-        {% endif %}
+<div class="bg-white-100 p-8">
+    <div class="mb-6 bg-white">
+        <h1 class="text-4xl font-bold text-center text-orange-800">Voici notre super team ! Avec qui voulez vous prendre rendez vous ?</h1>
+        {% for staff_user in staff_users %}
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-6 rainbow-border">
+            <div class="flex flex-col sm:flex-row items-center">
+                <!-- Image positionnée à droite -->
+                {% if staff_user.img %}
+                    <img class="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover rounded-full border-4 border-white mb-4 sm:mb-0 sm:ml-8" src="{% static staff_user.img %}" alt="image de {{ staff_user.user.username }}">
+                {% endif %}
+                
+                <div class="text-center sm:text-left sm:ml-8">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ staff_user.title }}</h2>
+                    <p class="mt-2 text-gray-600">{{ staff_user.description }}</p>
+                    
+                    <!-- Bouton pour prendre rendez-vous -->
+                    <a class="mt-4 inline-block text-lg text-white bg-blue-600 hover:bg-blue-700 rounded-lg py-2 px-6" href="{% url 'select_date' staff_user.user.id %}">Prendre rendez vous</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+</div>
 {% endblock %}
