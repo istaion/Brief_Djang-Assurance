@@ -3,10 +3,11 @@
 {% load static tailwind_tags %}
 
 {% block content%}
-  <div class="bg-white justify-center px-20">
-    <h1 class="text-3xl text-center font-bold">Mes Rendez-vous</h1>
+<div class="min-h-screen">
+  <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-3xl text-center font-bold mb-4">Mes Rendez-vous</h1>
     {% if user_appointments %}
-      <ul>
+      <ul class="text-center">
         {% for appointment in user_appointments %}
           <li class="text-lg font-semibold">
             Vous avez rendez vous avec 
@@ -21,8 +22,9 @@
     {% endif %}
 
     <p class="text-center flex flex-col items-center mt-6">
-      <span class="text-lg font-semibold">Vous voulez discuter avec nous ? N'hésitez pas à prendre un :</span>
-      <span><a class="btn text-lg hover:bg-blue-700" href="{% url staff_list_url %}">nouveau rendez-vous</a></span>
+      <span class="text-lg font-semibold mb-4">Vous voulez discuter avec nous ? N'hésitez pas à prendre un :</span>
+      <span><a class="btn text-lg" href="{% url staff_list_url %}">nouveau rendez-vous</a></span>
     </p>
   </div>
+</div>
 {% endblock %}

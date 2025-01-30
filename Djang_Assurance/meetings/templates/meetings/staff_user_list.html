@@ -5,7 +5,9 @@
 {% block content %}
 <div class="bg-white-100 p-8">
     <div class="mb-6">
-        <h1 class="text-4xl font-bold text-center text-orange-800 g-white-100 mb-4">Voici notre super team ! Avec qui voulez vous prendre rendez vous ?</h1>
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
+        <h1 class="text-4xl font-semibold text-center text-orange-800 g-white-100 mb-4">Voici notre super team ! Avec qui voulez vous prendre rendez vous ?</h1>
+        </div>
         {% for staff_user in staff_users %}
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-6 rainbow-border">
             <div class="flex flex-col sm:flex-row items-center">
@@ -16,10 +18,10 @@
                 
                 <div class="text-center sm:text-left sm:ml-8">
                     <h2 class="text-xl font-semibold text-gray-800">{{ staff_user.title }}</h2>
-                    <p class="mt-2 text-gray-600">{{ staff_user.description }}</p>
+                    <p class="mt-2 text-gray-600 mb-4">{{ staff_user.description }}</p>
                     
                     <!-- Bouton pour prendre rendez-vous -->
-                    <a class="btn text-lg hover:bg-blue-700" href="{% url 'select_date' staff_user.user.id %}">Prendre rendez vous</a>
+                    <a class="btn text-lg" href="{% url 'select_date' staff_user.user.id %}">Prendre rendez vous</a>
                 </div>
             </div>
         </div>

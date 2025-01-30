@@ -3,26 +3,25 @@
 {% load static tailwind_tags %}
 
 {% block content%}
-<body>
+<div class="min-h-screen">
     <div class="max-w-4xl mx-auto mt-4 bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 class="text-4xl font-bold text-center text-orange-800">Résultat :</h2>
-        <p>Avec le model {{prediction.reg_model}} la redevance pour {{prediction.user_id.prenom}} {{prediction.user_id.nom}} serait de {{ prediction.result }} euros.</p>
+        <h2 class="text-4xl font-semibold text-center text-orange-800 mb-6">Résultat :</h2>
+        <p>Avec le model {{prediction.reg_model}} la redevance pour {{prediction.user_id.prenom}} {{prediction.user_id.nom}} serait de <span class='font-semibold'>{{ prediction.result }}</span> euros.</p>
         <div>
-            <h3>Données de la victime :</h3>
-            <ul class="mt-2 text-gray-600">
-                <li>age : {{prediction.age}}</li>
-                <li>genre : {{prediction.sex}}</li>
-                <li>poid : {{prediction.weight}} kg</li>
-                <li>taille : {{prediction.size}} cm</li>
-                <li>nombre d'enfants : {{prediction.children}}</li>
-                <li>fumeur : {{prediction.smoker}}</li>
-                <li>region : {{prediction.region}}</li>
+            <h3>Données de l'utilisateur :</h3>
+            <ul class="mt-2 text-gray-600 ">
+                <li>age : <span class="font-semibold">{{prediction.age}} ans</span></li>
+                <li>genre : <span class="font-semibold">{{prediction.sex}}</span></li>
+                <li>poid : <span class="font-semibold">{{prediction.weight}} kg</span></li>
+                <li>taille : <span class="font-semibold">{{prediction.size}} cm</span></li>
+                <li>nombre d'enfants : <span class="font-semibold">{{prediction.children}}</span></li>
+                <li>fumeur : <span class="font-semibold">{{prediction.smoker}}</span></li>
+                <li>region : <span class="font-semibold">{{prediction.region}}</span></li>
             </ul>
-            <div class="p-2" >
-                <a class="btn text-lg hover:bg-blue-700 mx-2" href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a class="btn text-lg hover:bg-blue-700 mx-2" href="{% url 'prediction_update' prediction.id %}">Modifier</a>
+            <div class="flex justify-evenly p-2" >
+                <a class="btn text-lg mx-2" href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a class="btn text-lg mx-2" href="{% url 'prediction_update' prediction.id %}">Modifier</a>
             </div>
         </div>
     </div>
-
-</body>
+</div>
 {% endblock %}

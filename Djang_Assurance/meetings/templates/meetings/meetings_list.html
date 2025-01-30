@@ -3,27 +3,28 @@
 {% load static tailwind_tags %}
 
 {% block content%}
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
     <h1 class="text-3xl text-center font-bold">Agenda de la semaine</h1>
 
     <!-- Navigation -->
     <div class="bg-white flex flex-col items-center px-6 py-4 shadow-md rounded-lg mt-4">
         <div class="flex justify-center items-center gap-4">
             <a href="{% url 'agenda_by_date' week_start_date=previous_week|date:"Y-m-d" %}" 
-               class="btn text-lg hover:bg-blue-700">
+               class="btn text-lg">
                 ⬅️ Semaine précédente
             </a>
             <span class="text-lg font-semibold text-center">
                 {{ week_start_date|date:"d/m/Y" }} - {{ next_week|date:"d/m/Y" }}
             </span>
             <a href="{% url 'agenda_by_date' week_start_date=next_week|date:"Y-m-d" %}" 
-               class="btn text-lg hover:bg-blue-700">
+               class="btn text-lg">
                 Semaine suivante ➡️
             </a>
         </div>
     </div>
 
     <!-- Tableau de l'agenda -->
-    <div class="overflow-x-auto mt-6">
+    <div class="overflow-x-auto bg-white mt-6">
         <table class="w-full border-collapse border border-gray-300 text-sm text-center text-gray-600">
             <thead class="bg-gray-100">
                 <tr>
@@ -56,5 +57,6 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
     </div>
 {% endblock %}

@@ -3,7 +3,8 @@
 {% load static tailwind_tags %}
 
 {% block content %}
-<div class="bg-white justify-center px-20">
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
     <h1 class="text-xl font-bold">Prendre rendez-vous avec {{ staff_user.user.prenom }}</h1>
 
     <form method="post" class="mb-4">
@@ -18,11 +19,12 @@
             {% endfor %}
         </select>
 
-        <button type="submit" class="btn text-lg">Réserver</button>
+        <button type="submit" class="btn text-lg mt-4">Réserver</button>
 
         {% if error %}
             <p style="color: red;">{{ error }}</p>
         {% endif %}
     </form>
-
+    </div>
+</div>
 {% endblock %}

@@ -8,10 +8,9 @@
     <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-lg">
 
 {% if request.user.is_staff %}
-        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">Profil Licorne 🦄</h1>
+        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">{{request.user.prenom}} {{request.user.nom}} 🦄</h1>
         <!-- Informations utilisateur -->
         <div class="text-center">
-            <h4 class="text-2xl font-semibold text-gray-800 mb-4">{{ user.first_name }} {{ user.last_name }}</h4>
             <p class="text-gray-600 text-lg">
                 <strong>Email :</strong> {{ user.email }}<br>
                 <strong>Âge :</strong> 
@@ -42,18 +41,13 @@
             <a href="{% url 'prediction' %}" class="block w-full py-2 bg-[#2A9D8F] text-white font-semibold rounded-lg shadow-md hover:bg-[#23877a] focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2">
                 Faire une prédiction
             </a>
+            <a href="{% url 'agenda' %}" class="block w-full py-2 bg-[#2A9e5F] text-white font-semibold rounded-lg shadow-md hover:bg-[#2A9e4F] focus:outline-none focus:ring-2 focus:ring-[#2A9e4F] focus:ring-offset-2">
+                Votre agenda
+            </a>
             <a href="{% url 'accueil' %}" class="block w-full py-2 bg-[#264653] text-white font-semibold rounded-lg shadow-md hover:bg-[#1e3742] focus:outline-none focus:ring-2 focus:ring-[#264653] focus:ring-offset-2">
                 Retour à l'accueil
             </a>
         </div>
-    </div>
-
-
-    <div class="text-center mt-6 space-y-4">
-        <!-- Autres boutons -->
-        <a href="{% url 'suppression_compte' %}" class="block w-full py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-            Supprimer mon compte
-        </a>
     </div>
 
 
@@ -89,10 +83,9 @@
     </div>
 </div>
 {% else %}
-        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">Profil Utilisateur 🐴</h1>
+        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">{{request.user.prenom}} {{request.user.nom}} 🐴</h1>
         <!-- Informations utilisateur -->
         <div class="text-center">
-            <h4 class="text-2xl font-semibold text-gray-800 mb-4">{{ user.first_name }} {{ user.last_name }}</h4>
             <p class="text-gray-600 text-lg">
                 <strong>Email :</strong> {{ user.email }}<br>
                 <strong>Âge :</strong> 
