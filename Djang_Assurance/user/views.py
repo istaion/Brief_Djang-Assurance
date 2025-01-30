@@ -44,6 +44,11 @@ class InscriptionView(FormView):
 
 class Connexion(LoginView):
     template_name = 'user/connexion.html'
+    redirect_authenticated_user = True
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Nom d'utilisateur ou mot de passe incorrect. Veuillez réessayer.")
+        return super().form_invalid(form)
 
 
 class DeconnexionView(LogoutView):
@@ -70,6 +75,7 @@ class ProfilView(LoginRequiredMixin,TemplateView):
     
 
 class ModifProfilView(LoginRequiredMixin, UpdateView):
+    
     model = CustomUser
     form_class = ModifProfilForm
     template_name = 'user/modif_profil.html'
@@ -79,3 +85,15 @@ class ModifProfilView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
+class SuppressionUser(LoginRequiredMixin,View):
+    template_name = 'user/suppression_compte.html'
+
+    def get(self, request, *args, **kwargs):
+        #afficher la page de confirmation
+        return render(request, self.template_name)
+    
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        user.delete()
+        messages.success(request, "Votre compte a été supprimé avec succès.")
+        return redirect('accueil')
