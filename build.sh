@@ -6,7 +6,7 @@ set -o errexit
 pip install -r requirements.txt
 
 # Convert static asset files
-python Django_Assurance/manage.py collectstatic --no-input
+python Djang_Assurance/manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
-python Django_Assurance/manage.py migrate
+python Djang_Assurance/manage.py migrate
