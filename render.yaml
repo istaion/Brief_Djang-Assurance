@@ -1,0 +1,21 @@
+databases:
+  - name: Django_Assurance
+    plan: free
+    databaseName: Django_Assurance
+    user: Django_Assurance
+
+services:
+  - type: web
+    plan: free
+    name: Django_Assurance
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn Django_Assurance.asgi:application -k uvicorn.workers.UvicornWorker"    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: Django_Assurancedb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
