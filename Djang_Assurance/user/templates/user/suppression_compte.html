@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-lg">
+        <h1 class="text-center text-2xl font-bold text-gray-800 mb-4">Supprimer votre compte</h1>
+        <p class="text-center text-gray-600 mb-6">
+            Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex justify-between">
+                <a href="{% url 'profil' %}" class="py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400">
+                    Annuler
+                </a>
+                <button type="submit" class="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                    Supprimer mon compte
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

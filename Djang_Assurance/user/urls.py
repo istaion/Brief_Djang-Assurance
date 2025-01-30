@@ -7,6 +7,7 @@ from .views import (
     ProfilView,
     ModifProfilView,
     AccueilView,
+    SuppressionUser,
 )
 
 urlpatterns = [
@@ -17,6 +18,8 @@ urlpatterns = [
     path('profil/', ProfilView.as_view(), name='profil'),
     path('profil/modification/', ModifProfilView.as_view(), name='modification'),
     path('accueil/', AccueilView.as_view(), name='accueil_redirection'),
+    path('suppression-compte', SuppressionUser.as_view(), name='suppression_compte'),
 
 
 ]
+

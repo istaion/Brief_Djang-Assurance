@@ -11,6 +11,17 @@
             Rejoignez la communauté des rêveurs et découvrez la puissance du Unicorn Power !
         </p>
 
+        <!-- Affichage des messages d'erreur -->
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg {{ message.tags }} bg-red-100 text-red-700">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <!-- Formulaire -->
         <form method="post" class="space-y-6">
             {% csrf_token %}
@@ -43,7 +54,7 @@
             <div class="flex flex-col items-center">
                 <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896-2-2-.896-2-2-2-2 .896-2 2z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
                 </svg>
                 <p class="mt-2 text-gray-600">Accédez à vos offres personnalisées</p>
@@ -51,7 +62,7 @@
             <div class="flex flex-col items-center">
                 <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896-2-2-.896-2-2-2-2 .896-2 2z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
                 </svg>
                 <p class="mt-2 text-gray-600">Gérez vos informations en toute simplicité</p>
@@ -59,7 +70,7 @@
             <div class="flex flex-col items-center">
                 <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896-2-2-.896-2-2-2-2 .896-2 2z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
                 </svg>
                 <p class="mt-2 text-gray-600">Profitez d'un service client dédié</p>

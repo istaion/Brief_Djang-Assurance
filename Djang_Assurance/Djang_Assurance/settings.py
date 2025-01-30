@@ -154,3 +154,9 @@ LOGIN_REDIRECT_URL = 'profil'
 LOGOUT_REDIRECT_URL = 'connexion'
 
 NPM_BIN_PATH = 'npm'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'alert-danger',  # Classe CSS pour les messages d'erreur
+    messages.SUCCESS: 'alert-success',  # Classe CSS pour les messages de succès
+}
