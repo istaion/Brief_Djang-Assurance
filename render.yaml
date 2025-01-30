@@ -5,10 +5,10 @@ services:
     runtime: python
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn Django_Assurance.asgi:application -k uvicorn.workers.UvicornWorker"
-    envVars:  # L'erreur était ici : l'indentation était incorrecte
+    envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: Django_Assurancedb
+          name: dpg-cudoasdumphs73cqsk10-a
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
