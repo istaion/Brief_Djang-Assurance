@@ -1,9 +1,3 @@
-databases:
-  - name: Django_Assurancedb  # Assure-toi que le nom correspond à ta DB sur Render
-    plan: free
-    databaseName: Django_Assurance
-    user: Django_Assurance
-
 services:
   - type: web
     plan: free
