@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+<body>
+    <div class = "min-h-screen">
+        <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6 rainbow-border">
+        <h2 class="text-4xl font-bold text-center text-orange-800 mt-4">✨Félicitations !✨ </h2>
+            <p class="mt-2 text-gray-600">Le montant de votre redevance d’assurance est de <span class="font-semibold">{{ prediction.result }} €</span>. Une broutille, franchement, comparé à ce que cela va vous apporter ! 🎉</p>
+            <p class="mt-2 text-gray-600">Désormais, votre vie va prendre une toute nouvelle dimension. 🌟 La sérénité ? Inclus. La sécurité ? Livrée avec amour. Les paillettes ? Oh oui, des tonnes de paillettes, parce que vous êtes désormais assuré par la team Unicorn ! 🦄</p>
+            <p class="mt-2 text-gray-600">Vous n’êtes pas seulement protégé, vous êtes officiellement invincible. Allez, respirez, détendez-vous et laissez-nous vous accompagner vers une vie pleine de magie et de tranquillité.💫</p>
+            <p class="mt-2 mb-2 text-gray-600">Bienvenue dans la team des protégés enchantés.🎶</p>
+            <div class="bg-white flex justify-evenly px-20 mt-4">
+                <a class="btn text-lg" href="{% url 'user_update' prediction.id %}">Recalculer votre redevance</a>
+                <a class="btn text-lg" href="{% url 'staff_list' %}">Prendre rendez vous avec un conseiller</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+{% endblock %}

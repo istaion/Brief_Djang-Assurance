@@ -1,0 +1,21 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+    <div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+        <h1 class="text-3xl font-bold mb-6" color="645454">Données de la victime :</h1>
+
+        <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+            {% csrf_token %}
+            
+            <!-- Form fields -->
+            <div class="mb-4">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Rechercher</button>
+        </form>
+    </div>
+{% endblock %}

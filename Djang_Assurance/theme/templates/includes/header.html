@@ -1,0 +1,71 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Fonction pour basculer le menu burger
+      function toggleMenu() {
+          const menu = document.getElementById('burger-menu');
+          menu.classList.toggle('hidden');
+      }
+  </script>
+</head>
+<body>
+    <header class="bg-white shadow-md">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+            <!-- Logo à gauche -->
+            <div>
+                <a href="{% url 'accueil' %}">
+                    <img class="h-28 w-28 rounded-full" src="{% static 'css/dist/logo.jpg' %}" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Phrase centrée -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 text-center font-bold text-xl text-[#E9967A]">
+                L’assurance des rêveurs qui ont besoin du unicorn power
+            </div>
+
+            <!-- Menu Burger et login/logout à droite -->
+            <div class="flex items-center gap-4">
+                {% if request.user.is_authenticated %}
+                    <form method="POST" action="{% url 'deconnexion' %}" class="text-sm font-semibold text-gray-900">
+                        {% csrf_token %}
+                        <button type="submit">Log out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'connexion' %}" class="text-sm font-semibold text-gray-900">Log in &rarr;</a>
+                {% endif %}
+            
+              {% if request.user.is_authenticated %}
+                  <!-- Menu Burger -->
+              <div class="relative">
+                <button type="button" onclick="toggleMenu()" class="p-2 text-gray-700">
+                    <span class="sr-only">Menu</span>
+                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                    </svg>
+                </button>
+                {% if request.user.is_staff %}
+                <!-- Menu caché -->
+                <div id="burger-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                  <a href="{% url 'profil' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                  <a href="{% url 'agenda' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Agenda</a>
+                  <a href="{% url 'results' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Votre offre</a>
+                </div>                {% else %}
+                <!-- Menu caché -->
+                <div id="burger-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                    <a href="{% url 'profil' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                    <a href="{% url 'user_meeting_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Rendez-vous</a>
+                    <a href="{% url 'user_prediction' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Votre offre</a>
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+          </nav>
+    </header>
+</body>
+</html>

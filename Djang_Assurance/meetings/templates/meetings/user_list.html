@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+<div class="min-h-screen">
+  <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-3xl text-center font-bold mb-4">Mes Rendez-vous</h1>
+    {% if user_appointments %}
+      <ul class="text-center">
+        {% for appointment in user_appointments %}
+          <li class="text-lg font-semibold">
+            Vous avez rendez vous avec 
+            <strong>{{ appointment.staff_user.user.nom }} {{ appointment.staff_user.user.prenom }}</strong> 
+            {{ appointment.date }} à {{ appointment.start_time }} - 
+            {{ appointment.end_time }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-lg font-semibold">Vous n'avez pas encore de rendez-vous.</p>
+    {% endif %}
+
+    <p class="text-center flex flex-col items-center mt-6">
+      <span class="text-lg font-semibold mb-4">Vous voulez discuter avec nous ? N'hésitez pas à prendre un :</span>
+      <span><a class="btn text-lg" href="{% url staff_list_url %}">nouveau rendez-vous</a></span>
+    </p>
+  </div>
+</div>
+{% endblock %}

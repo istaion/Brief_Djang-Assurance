@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <!-- Cadre du profil -->
+    <div class="bg-white shadow-lg rounded-lg p-10 w-full max-w-lg">
+
+{% if request.user.is_staff %}
+        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">{{request.user.prenom}} {{request.user.nom}} 🦄</h1>
+        <!-- Informations utilisateur -->
+        <div class="text-center">
+            <p class="text-gray-600 text-lg">
+                <strong>Email :</strong> {{ user.email }}<br>
+                <strong>Âge :</strong> 
+                {% if user.age %}
+                    {{ user.age }} ans
+                {% else %}
+                    Non renseigné
+                {% endif %}
+                <br>
+                <strong>Adresse :</strong> 
+                {% if user.adresse %}
+                    {{ user.adresse }}
+                {% else %}
+                    Non renseignée
+                {% endif %}
+                <br>
+            </p>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="text-center mt-6 space-y-4">
+            <a href="{% url 'results' %}" class="block w-full py-2 bg-[#E9967A] text-white font-semibold rounded-lg shadow-md hover:bg-[#d17c64] focus:outline-none focus:ring-2 focus:ring-[#E9967A] focus:ring-offset-2">
+                Voir mes prédictions
+            </a>
+            <a href="{% url 'modification' %}" class="block w-full py-2 bg-[#F4A261] text-white font-semibold rounded-lg shadow-md hover:bg-[#d98a4f] focus:outline-none focus:ring-2 focus:ring-[#F4A261] focus:ring-offset-2">
+                Modifier mes informations
+            </a>
+            <a href="{% url 'prediction' %}" class="block w-full py-2 bg-[#2A9D8F] text-white font-semibold rounded-lg shadow-md hover:bg-[#23877a] focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2">
+                Faire une prédiction
+            </a>
+            <a href="{% url 'agenda' %}" class="block w-full py-2 bg-[#2A9e5F] text-white font-semibold rounded-lg shadow-md hover:bg-[#2A9e4F] focus:outline-none focus:ring-2 focus:ring-[#2A9e4F] focus:ring-offset-2">
+                Votre agenda
+            </a>
+            <a href="{% url 'accueil' %}" class="block w-full py-2 bg-[#264653] text-white font-semibold rounded-lg shadow-md hover:bg-[#1e3742] focus:outline-none focus:ring-2 focus:ring-[#264653] focus:ring-offset-2">
+                Retour à l'accueil
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Section "Pourquoi consulter votre profil ?" -->
+    <div class="mt-12 text-center w-full max-w-4xl">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Pourquoi consulter votre profil ?</h2>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Vérifiez vos informations personnelles</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Accédez à vos prédictions et résultats</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Mettez à jour vos informations facilement</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+        <h1 class="text-center text-3xl font-bold text-gray-800 mb-4">{{request.user.prenom}} {{request.user.nom}} 🐴</h1>
+        <!-- Informations utilisateur -->
+        <div class="text-center">
+            <p class="text-gray-600 text-lg">
+                <strong>Email :</strong> {{ user.email }}<br>
+                <strong>Âge :</strong> 
+                {% if user.age %}
+                    {{ user.age }} ans
+                {% else %}
+                    Non renseigné
+                {% endif %}
+                <br>
+                <strong>Adresse :</strong> 
+                {% if user.adresse %}
+                    {{ user.adresse }}
+                {% else %}
+                    Non renseignée
+                {% endif %}
+                <br>
+            </p>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="text-center mt-6 space-y-4">
+            <a href="{% url 'user_prediction' %}" class="block w-full py-2 bg-[#E9967A] text-white font-semibold rounded-lg shadow-md hover:bg-[#d17c64] focus:outline-none focus:ring-2 focus:ring-[#E9967A] focus:ring-offset-2">
+                Calculer mes redevances
+            </a>
+            <a href="{% url 'modification' %}" class="block w-full py-2 bg-[#F4A261] text-white font-semibold rounded-lg shadow-md hover:bg-[#d98a4f] focus:outline-none focus:ring-2 focus:ring-[#F4A261] focus:ring-offset-2">
+                Modifier mes informations
+            </a>
+            <a href="{% url 'user_meeting_list' %}" class="block w-full py-2 bg-[#2A9D8F] text-white font-semibold rounded-lg shadow-md hover:bg-[#23877a] focus:outline-none focus:ring-2 focus:ring-[#2A9D8F] focus:ring-offset-2">
+                Votre agenda
+            </a>
+            <a href="{% url 'accueil' %}" class="block w-full py-2 bg-[#264653] text-white font-semibold rounded-lg shadow-md hover:bg-[#1e3742] focus:outline-none focus:ring-2 focus:ring-[#264653] focus:ring-offset-2">
+                Retour à l'accueil
+            </a>
+            <!-- Autres boutons -->
+            <a href="{% url 'suppression_compte' %}" class="block w-full py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                    Supprimer mon compte
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Section "Pourquoi consulter votre profil ?" -->
+    <div class="mt-12 text-center w-full max-w-4xl">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Pourquoi consulter votre profil ?</h2>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Vérifiez vos informations personnelles</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104-.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Accédez à vos prédictions et résultats</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <svg class="h-12 w-12 text-[#E9967A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2-2 2s-2-.896-2-2 .896-2 2-2 2 .896 2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 1.104.896 2 2 2s2-.896 2-2-.896-2-2-2-2 .896-2 2z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11v10m-6-6h12"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Mettez à jour vos informations facilement</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+<script src="https://cdn.tailwindcss.com"></script>
+<div class = "bg-white px-20">
+    
+    <h1 class="text-3xl text-center font-bold">Liste des Prédictions</h1>
+    <br></br>
+
+    <form method="get" class="mb-4">
+        {{ form.as_p }}
+        <br></br>
+        <button type="submit" class="btn text-lg">Filtrer</button>
+    </form>
+    <br></br>
+    <!-- Tableau des prédictions -->
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400" border="1">
+        <thead>
+            <tr class="text-lg">
+                <th>ID</th>
+                <th>Utilisateur</th>
+                <th>Âge</th>
+                <th>Genre</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>Enfants</th>
+                <th>Fumeur</th>
+                <th>Région</th>
+                <th>Modèle</th>
+                <th>Résultat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prediction in predictions %}
+                <tr>
+                    <td>{{ prediction.id }}</td>
+                    <td>{{ prediction.user_id.username }}</td>
+                    <td>{{ prediction.age }}</td>
+                    <td>{{ prediction.sex }}</td>
+                    <td>{{ prediction.weight }}</td>
+                    <td>{{ prediction.size }}</td>
+                    <td>{{ prediction.children }}</td>
+                    <td>{{ prediction.smoker }}</td>
+                    <td>{{ prediction.region }}</td>
+                    <td>{{ prediction.reg_model }}</td>
+                    <td>{{ prediction.result }}</td>
+                    <td>
+                        <a class="font-semibold text-orange-800" href="{% url 'result' prediction.id %}">Voir</a> |
+                        <a class="font-semibold text-orange-800" href="{% url 'prediction_delete' prediction.id %}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br></br>
+    <a class="text-lg font-bold" href="{% url 'prediction' %}"> ➜ Réaliser une autre prédiction</a>
+</body>
+{% endblock %}
