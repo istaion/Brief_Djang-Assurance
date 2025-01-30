@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'Djang_Assurance.wsgi.application'
 # Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432/mysite'),
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600
     )
 }
