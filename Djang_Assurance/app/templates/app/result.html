@@ -4,9 +4,9 @@
 
 {% block content%}
 <body>
-    <div class = "bg-white">
-        <h2>Par ici la moula :</h2>
-        <p>Avec le model {{prediction.reg_model}} on peut lui sucer {{ prediction.result }} boules !</p>
+    <div class = "bg-white px-20">
+        <h2>Résultat :</h2>
+        <p>Avec le model {{prediction.reg_model}} la redevance pour {{prediction.user_id.prenom}} {{prediction.user_id.prenom}} serait de {{ prediction.result }} euros.</p>
         <div>
             <h3>Données de la victime :</h3>
             <ul>

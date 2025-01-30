@@ -3,13 +3,15 @@
 {% load static tailwind_tags %}
 
 {% block content%}
-<body>
-    <h1>Modifier vos données</h1>
-    <form method="post">
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <h2 class="text-3xl font-bold mb-6" color="645454">Modifier vos données </h2>
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class ="btn text-xl">Mettre à jour</button>
+        <div class="mb-4">
+            {{form.as_p}}
+        </div>
+        <br></br>
+        <button type="submit" class="btn text-lg">Mettre à jour</button>
     </form>
-    <a href="{% url 'user_update' prediction.id %}">Modifier</a>
-</body>
+</div>
 {% endblock %}

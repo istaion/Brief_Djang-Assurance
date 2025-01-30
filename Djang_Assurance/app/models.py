@@ -143,3 +143,24 @@ class Prediction(models.Model):
             case "northeast" : self.region = "Nord Est" 
             case "northwest" : self.region = "Nord Ouest"
 
+    def en_transform(self):
+        """
+        Transforms the prediction's fields into their French equivalent for better user display.
+
+        Translates:
+        - sex: 'male' -> 'homme', 'female' -> 'femme'
+        - smoker: 'yes' -> 'oui', 'no' -> 'non'
+        - region: English names to French names
+        """
+        match self.sex:
+            case 'femme': self.sex = 'female'
+            case 'homme' :self.sex = 'male'
+        match self.smoker:
+            case 'oui': self.smoker = 'yes'
+            case 'non' : self.smoker = 'no'
+        match self.region:
+            case "Sud Est" : self.region = "southeast"
+            case "Sud Ouest" : self.region = "southwest"
+            case "Nord Est"  : self.region = "northeast"
+            case "Nord Ouest" : self.region = "northwest"
+

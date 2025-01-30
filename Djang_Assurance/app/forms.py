@@ -14,7 +14,19 @@ class PredictionForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['result','made_by_staff', 'made_by']
 
-
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data["sex"] in {'homme', 'femme'}:
+            prediction = Prediction(**cleaned_data)  # Création temporaire d'une instance
+            prediction.en_transform()  # Appliquer la transformation en anglais
+            
+            # Mettre à jour les valeurs dans cleaned_data
+            cleaned_data["sex"] = prediction.sex
+            cleaned_data["smoker"] = prediction.smoker
+            cleaned_data["region"] = prediction.region
+            return cleaned_data
+        else:
+            return cleaned_data
 
 class UserPredictionForm(forms.ModelForm):
     """
@@ -29,6 +41,20 @@ class UserPredictionForm(forms.ModelForm):
         model = Prediction
         fields = '__all__'
         exclude = ['result', 'made_by_staff', 'reg_model', 'user_id', 'made_by']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data["sex"] in {'homme', 'femme'}:
+            prediction = Prediction(**cleaned_data)  # Création temporaire d'une instance
+            prediction.en_transform()  # Appliquer la transformation en anglais
+            
+            # Mettre à jour les valeurs dans cleaned_data
+            cleaned_data["sex"] = prediction.sex
+            cleaned_data["smoker"] = prediction.smoker
+            cleaned_data["region"] = prediction.region
+            return cleaned_data
+        else:
+            return cleaned_data
 
 class PredictionFilterForm(forms.Form):
     """
