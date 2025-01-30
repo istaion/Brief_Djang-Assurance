@@ -3,6 +3,9 @@ from user.models import CustomUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 import pandas as pd
 import cloudpickle
+import os
+
+
 
 SEX_CHOICES =( 
     ("female", "Femme"), 
@@ -58,6 +61,7 @@ class Reg_model(models.Model):
         print(data)
         print(data.dtypes)
         # Load the serialized regression model
+        print("Chemin absolu du modèle :", os.path.abspath(self.path))
         with open(self.path, 'rb') as f:
             reg = cloudpickle.load(f)
         prediction = reg.predict(data)
