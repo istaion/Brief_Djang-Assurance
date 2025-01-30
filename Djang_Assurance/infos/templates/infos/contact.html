@@ -1,0 +1,78 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+</head>
+
+{% block content%}
+<div class="max-w-4xl mx-auto p-6 bg-white">
+{% comment %} 
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Contactez-nous</h1>
+
+    <p class="mb-4">Vous avez une question ou besoin d’aide ? N’hésitez pas à nous contacter en remplissant le formulaire ci-dessous. Notre équipe vous répondra dans les plus brefs délais.</p>
+
+    <form action="#" method="POST" class="bg-white shadow-md rounded-lg p-6">
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
+            <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+        </div>
+
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
+            <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+        </div>
+
+        <div class="mb-4">
+            <label for="subject" class="block text-sm font-medium text-gray-700">Sujet</label>
+            <input type="text" id="subject" name="subject" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+        </div>
+
+        <div class="mb-4">
+            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea id="message" name="message" rows="4" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+        </div>
+
+        <div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                Envoyer le message
+            </button>
+        </div>
+    </form> {% endcomment %}
+    <div class="container mt-5">
+        <h1 class="text-center">Contactez-nous</h1>
+    <div class="container mt-5 bg-white">
+        <h1 class="text-center font-bold text-xl">Contactez-nous</h1>
+        <form method="post" class="card p-4 shadow mx-auto" style="max-width: 500px;">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="text-danger">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+        </form>
+    </div>
+    
+    <div class="mt-5">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">Autres moyens de nous contacter</h2>
+        <ul class="list-disc pl-6">
+            <li>Téléphone : <a href="tel:+33123456789" class="text-blue-600 underline">+33 1 23 45 67 89</a></li>
+            <li>Email : <a href="mailto:contact@nomdelentreprise.com" class="text-blue-600 underline">contact_assuraimant@assuraimant.com</a></li>
+            <li>Adresse : <span class="font-medium">6 Rue Emile Moreau, 59100 Roubaix</span>
+            <a href="https://www.google.fr/maps/place/6+Rue+Emile+Moreau,+59100+Roubaix/@50.6953199,3.1699341,16z/data=!3m1!4b1!4m6!3m5!1s0x47c328e962dc70e1:0x442616cbeb940545!8m2!3d50.6953165!4d3.1725037!16s%2Fg%2F11c1_ffjv7?entry=ttu&g_ep=EgoyMDI1MDEyNi4wIKXMDSoASAFQAw%3D%3D">🗺️</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

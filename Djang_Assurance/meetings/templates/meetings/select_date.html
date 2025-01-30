@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-6">
+    <h1 class="text-xl font-bold">Prendre rendez-vous avec {{ staff_user.user.prenom }}</h1>
+
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <label for="date">Choisir la date :</label>
+        <input type="date" id="date" name="date" required>
+
+        <button type="submit" class="btn text-lg mt-4">Choisir</button>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </form>
+    </div
+</div>
+{% endblock %}

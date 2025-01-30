@@ -1,0 +1,107 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>privacy</title>
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+</head>
+
+{% block content%}
+<div class="max-w-4xl mx-auto p-6 bg-white">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Politique de Confidentialité</h1>
+
+    <p class="mb-4">Chez <span class="font-semibold">Assur'AImant</span>, la protection de vos données personnelles est une priorité. Nous nous engageons à respecter votre vie privée et à garantir la sécurité de vos informations conformément aux lois et réglementations en vigueur, notamment le Règlement Général sur la Protection des Données (RGPD).</p>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">1. Responsable du traitement des données</h2>
+        <p>Le responsable du traitement des données est <span class="font-semibold">Unicorn Power</span>, situé au <span class="font-semibold">6 Rue Emile Moreau, 59100 Roubaix</span>, enregistré sous le numéro <span class="font-semibold">0123456</span>. Pour toute question relative à vos données personnelles, vous pouvez nous contacter à l’adresse suivante : <span class="font-semibold">contact_unicorn@gmail.com</span>.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">2. Données collectées</h2>
+        <ul class="list-disc pl-6">
+            <li>Informations personnelles : nom, prénom, adresse, date de naissance, numéro de téléphone, email.</li>
+            <li>Données contractuelles : informations relatives aux contrats d’assurance souscrits, historique des sinistres, documents justificatifs.</li>
+            <li>Données de navigation : cookies, adresses IP, données liées à l’utilisation de notre site web.</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">3. Finalités du traitement</h2>
+        <p>Vos données personnelles sont utilisées pour :</p>
+        <ul class="list-disc pl-6">
+            <li>La gestion de vos contrats d’assurance.</li>
+            <li>L’analyse et le traitement des sinistres.</li>
+            <li>La gestion de notre relation client (informations, réclamations, suivi).</li>
+            <li>Le respect de nos obligations légales et réglementaires.</li>
+            <li>Des finalités marketing et commerciales (avec votre consentement préalable).</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">4. Base légale du traitement</h2>
+        <p>Les traitements de vos données sont fondés sur :</p>
+        <ul class="list-disc pl-6">
+            <li>L’exécution d’un contrat ou de mesures précontractuelles.</li>
+            <li>Le respect d’une obligation légale.</li>
+            <li>Votre consentement pour les finalités marketing.</li>
+            <li>Notre intérêt légitime à améliorer nos services.</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">5. Partage des données</h2>
+        <p>Vos données peuvent être partagées avec :</p>
+        <ul class="list-disc pl-6">
+            <li>Nos partenaires et prestataires (experts, gestionnaires de sinistres, courtiers).</li>
+            <li>Les autorités compétentes dans le cadre de nos obligations légales.</li>
+        </ul>
+        <p>Nous nous assurons que ces tiers respectent des normes strictes en matière de protection des données.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">6. Durée de conservation</h2>
+        <p>Vos données personnelles sont conservées pendant la durée strictement nécessaire à la réalisation des finalités décrites. Par exemple :</p>
+        <ul class="list-disc pl-6">
+            <li>Données contractuelles : durée du contrat + 2 ans.</li>
+            <li>Données à des fins marketing : jusqu’à votre demande de désinscription.</li>
+        </ul>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">7. Vos droits</h2>
+        <p>Vous disposez des droits suivants :</p>
+        <ul class="list-disc pl-6">
+            <li>Droit d’accès : obtenir une copie de vos données.</li>
+            <li>Droit de rectification : corriger vos données si elles sont inexactes.</li>
+            <li>Droit à l’effacement : demander la suppression de vos données dans certaines conditions.</li>
+            <li>Droit à la limitation : restreindre temporairement le traitement de vos données.</li>
+            <li>Droit à la portabilité : recevoir vos données dans un format structuré.</li>
+            <li>Droit d’opposition : vous opposer au traitement à des fins marketing.</li>
+        </ul>
+        <p>Pour exercer vos droits, contactez-nous à : <span class="font-semibold">contact_unicorn@gmail.com </span>ou <span class="font-semibold">contact_assuraimant@gmail.com</span>. Vous avez également le droit de déposer une plainte auprès du<span class="font-semibold">comission nationale de l'informatique et des libertés (CNIL)</span>.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">8. Cookies</h2>
+        <p>Notre site utilise des cookies pour améliorer votre expérience utilisateur. Vous pouvez gérer vos préférences ou désactiver les cookies en utilisant les paramètres de votre navigateur. Pour en savoir plus, consultez notre <a href="#" class="text-blue-600 underline">Politique de Cookies</a>.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">9. Sécurité des données</h2>
+        <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou destruction.</p>
+    </section>
+
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">10. Modifications de la politique de confidentialité</h2>
+        <p>Cette politique de confidentialité peut être mise à jour à tout moment. La version en vigueur est celle disponible sur notre site web.</p>
+    </section>
+
+    <p class="text-sm text-gray-500">Dernière mise à jour : <span class="font-semibold">30/01/2025</span></p>
+</div>
+{% endblock %}
