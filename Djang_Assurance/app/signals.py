@@ -4,19 +4,23 @@ from user.models import CustomUser, StaffUser
 from .models import Reg_model, Prediction
 from meetings.models import Appointment, Availability
 from datetime import date, time
+import os
+from django.conf import settings
 
+# Définir le chemin absolu du dossier contenant les modèles
+MODEL_DIR = os.path.join(settings.BASE_DIR, "app", "regression", "models")
 
 @receiver(post_migrate)
 def after_migrations(sender, **kwargs):
     if not Reg_model.objects.all():
         # Créer les modèles
         print('Initialisation des modèles...')
-        reg1 = Reg_model.objects.create(name = "linéaire basique", path="app/regression/models/basic_linreg_model.pkl")
-        reg2 = Reg_model.objects.create(name = "Gradient boosting", path="app/regression/models/gb_model.pkl")
-        reg3 = Reg_model.objects.create(name = "linéaire", path="app/regression/models/linreg_model.pkl")
-        reg4 = Reg_model.objects.create(name = "random forest", path="app/regression/models/rf_model.pkl")
-        reg5 = Reg_model.objects.create(name = "ridge_model", path="app/regression/models/ridge_model.pkl")
-        reg6 = Reg_model.objects.create(name = "lasso model", path="app/regression/models/best_lasso_model.pkl")
+        reg1 = Reg_model.objects.create(name="linéaire basique", path=os.path.join(MODEL_DIR, "basic_linreg_model.pkl"))
+        reg2 = Reg_model.objects.create(name="Gradient boosting", path=os.path.join(MODEL_DIR, "gb_model.pkl"))
+        reg3 = Reg_model.objects.create(name="linéaire", path=os.path.join(MODEL_DIR, "linreg_model.pkl"))
+        reg4 = Reg_model.objects.create(name="random forest", path=os.path.join(MODEL_DIR, "rf_model.pkl"))
+        reg5 = Reg_model.objects.create(name="ridge_model", path=os.path.join(MODEL_DIR, "ridge_model.pkl"))
+        reg6 = Reg_model.objects.create(name="lasso model", path=os.path.join(MODEL_DIR, "best_lasso_model.pkl"))
 
         # Créer des utilisateurs
         print('Initialisation des utilisateurs...')
