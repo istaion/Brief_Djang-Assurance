@@ -1,6 +1,14 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, CreateView, UpdateView, ListView, DetailView, FormView, View
+from django.views.generic import (
+    DeleteView,
+    CreateView,
+    UpdateView,
+    ListView,
+    DetailView,
+    FormView,
+    View,
+)
 from .forms import PredictionForm, UserPredictionForm, PredictionFilterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.permissions import StaffRequiredMixin, UserRequiredMixin
@@ -8,13 +16,15 @@ from .models import Prediction
 
 # Team Unicorn: Views for handling Predictions
 
+
 class PredictionView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     """
     Handles the creation of a new Prediction object.
     Uses the PredictionForm and redirects to the result page after saving.
     """
+
     model = Prediction
-    template_name = 'app/prediction.html'
+    template_name = "app/prediction.html"
     form_class = PredictionForm
 
     def form_valid(self, form):
@@ -32,11 +42,12 @@ class PredictionView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
         self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
-        return redirect('result', pk=prediction_id)  # Redirect to the result page.
+        return redirect("result", pk=prediction_id)  # Redirect to the result page.
+
 
 class PredictionUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     model = Prediction
-    template_name = 'app/prediction_update.html'
+    template_name = "app/prediction_update.html"
     form_class = PredictionForm
 
     def form_valid(self, form):
@@ -54,13 +65,13 @@ class PredictionUpdateView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
         self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
-        return redirect('result', pk=prediction_id)  # Redirect to the result page.
-    
+        return redirect("result", pk=prediction_id)  # Redirect to the result page.
+
+
 class PredictionDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Prediction
-    template_name = 'app/prediction_confirm_delete.html'
-    success_url = reverse_lazy('results')
-
+    template_name = "app/prediction_confirm_delete.html"
+    success_url = reverse_lazy("results")
 
 
 class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, FormView):
@@ -68,9 +79,10 @@ class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, Form
     Vue combinée ListView et FormView pour afficher les prédictions avec
     options de filtrage et de tri.
     """
+
     model = Prediction
-    template_name = 'app/results.html'
-    context_object_name = 'predictions'
+    template_name = "app/results.html"
+    context_object_name = "predictions"
     form_class = PredictionFilterForm
 
     def get_form(self, form_class=None):
@@ -86,24 +98,24 @@ class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, Form
         """
         Applique les filtres et les tris selon les données du formulaire.
         """
-        print("get_queryset is called") 
+        print("get_queryset is called")
         queryset = super().get_queryset()
         form = self.get_form()
         if form.is_valid():
             # Filtres
-            user = form.cleaned_data.get('user')
-            min_age = form.cleaned_data.get('min_age')
-            max_age = form.cleaned_data.get('max_age')
-            min_children = form.cleaned_data.get('min_children')
-            max_children = form.cleaned_data.get('max_children')
-            min_weight = form.cleaned_data.get('min_weight')
-            max_weight = form.cleaned_data.get('max_weight')
-            min_size = form.cleaned_data.get('min_size')
-            max_size = form.cleaned_data.get('max_size')
-            sex = form.cleaned_data.get('sex')
-            smoker = form.cleaned_data.get('smoker')
-            region = form.cleaned_data.get('region')
-            reg_model = form.cleaned_data.get('reg_model')
+            user = form.cleaned_data.get("user")
+            min_age = form.cleaned_data.get("min_age")
+            max_age = form.cleaned_data.get("max_age")
+            min_children = form.cleaned_data.get("min_children")
+            max_children = form.cleaned_data.get("max_children")
+            min_weight = form.cleaned_data.get("min_weight")
+            max_weight = form.cleaned_data.get("max_weight")
+            min_size = form.cleaned_data.get("min_size")
+            max_size = form.cleaned_data.get("max_size")
+            sex = form.cleaned_data.get("sex")
+            smoker = form.cleaned_data.get("smoker")
+            region = form.cleaned_data.get("region")
+            reg_model = form.cleaned_data.get("reg_model")
 
             if user:
                 queryset = queryset.filter(user_id__username__icontains=user)
@@ -133,8 +145,8 @@ class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, Form
                 queryset = queryset.filter(reg_model_id__name__icontains=reg_model)
 
             # Tri
-            sort_by = form.cleaned_data.get('sort_by')
-            order = form.cleaned_data.get('order', 'asc')
+            sort_by = form.cleaned_data.get("sort_by")
+            order = form.cleaned_data.get("order", "asc")
             if sort_by:
                 if order == "desc":
                     sort_by = f"-{sort_by}"  # Tri descendant
@@ -144,14 +156,16 @@ class PredictionsListView(LoginRequiredMixin, StaffRequiredMixin, ListView, Form
         return queryset
 
 
-
 class ResultView(LoginRequiredMixin, StaffRequiredMixin, DetailView):
     """
     Displays the details of a single Prediction object.
     """
+
     model = Prediction
-    template_name = 'app/result.html'
-    context_object_name = 'prediction'  # Use 'prediction' as the context variable in the template.
+    template_name = "app/result.html"
+    context_object_name = (
+        "prediction"  # Use 'prediction' as the context variable in the template.
+    )
 
 
 # Views for User-specific Predictions
@@ -161,11 +175,12 @@ class UserPredictionView(LoginRequiredMixin, UserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         try:
             # Vérifie si une prédiction existe pour l'utilisateur
-            prediction = Prediction.objects.get(made_by = request.user)
-            return redirect('user_result', pk=prediction.id)
+            prediction = Prediction.objects.get(made_by=request.user)
+            return redirect("user_result", pk=prediction.id)
         except Prediction.DoesNotExist:
             # Sinon, redirige vers 'user_create'
-            return redirect('user_create')
+            return redirect("user_create")
+
 
 class UserCreatePredictionView(LoginRequiredMixin, UserRequiredMixin, CreateView):
     """
@@ -173,8 +188,9 @@ class UserCreatePredictionView(LoginRequiredMixin, UserRequiredMixin, CreateView
     Uses the UserPredictionForm and excludes fields like `reg_model` and `result`.
     Redirects to the user result page after saving.
     """
+
     model = Prediction
-    template_name = 'app/user_prediction.html'
+    template_name = "app/user_prediction.html"
     form_class = UserPredictionForm
 
     def form_valid(self, form):
@@ -191,20 +207,26 @@ class UserCreatePredictionView(LoginRequiredMixin, UserRequiredMixin, CreateView
         self.object.made_by = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
-        return redirect('user_result', pk=prediction_id)  # Redirect to the user-specific result page.
+        return redirect(
+            "user_result", pk=prediction_id
+        )  # Redirect to the user-specific result page.
 
 
 class UserResultView(LoginRequiredMixin, UserRequiredMixin, DetailView):
     """
     Displays the details of a single Prediction object created by a user.
     """
+
     model = Prediction
-    template_name = 'app/user_result.html'
-    context_object_name = 'prediction'  # Use 'prediction' as the context variable in the template.
+    template_name = "app/user_result.html"
+    context_object_name = (
+        "prediction"  # Use 'prediction' as the context variable in the template.
+    )
+
 
 class UserPredictionUpdateView(LoginRequiredMixin, UserRequiredMixin, UpdateView):
     model = Prediction
-    template_name = 'app/user_prediction_update.html'
+    template_name = "app/user_prediction_update.html"
     form_class = UserPredictionForm
 
     def form_valid(self, form):
@@ -222,4 +244,4 @@ class UserPredictionUpdateView(LoginRequiredMixin, UserRequiredMixin, UpdateView
         self.object.user_id = self.request.user
         self.object.save()  # Save the object to the database.
         prediction_id = self.object.id
-        return redirect('user_result', pk=prediction_id)  # Redirect to the result page.
+        return redirect("user_result", pk=prediction_id)  # Redirect to the result page.

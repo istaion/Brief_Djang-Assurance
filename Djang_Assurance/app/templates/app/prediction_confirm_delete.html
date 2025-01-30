@@ -3,13 +3,13 @@
 {% load static tailwind_tags %}
 
 {% block content%}
-<body>
-    <h1>Confirmez la suppression</h1>
-    <p>Êtes-vous sûr de vouloir supprimer cette prédiction ?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn text-xl">Oui, supprimer</button>
-        <a href="{% url 'results' %}">Annuler</a>
+<div class="flex flex-col items-center justify-center min-h-screen bg-[#FDF5F5]">
+    <h1 class="text-3xl font-bold mb-6" color="645454">Confirmez la suppression :</h1>
+
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+            {% csrf_token %}
+            <button type="submit" class="btn text-xl p-3">Oui, supprimer</button>
+            <a href="{% url 'results' %}">Annuler</a>
     </form>
-</body>
+</div>
 {% endblock %}

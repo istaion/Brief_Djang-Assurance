@@ -4,12 +4,12 @@
 
 {% block content%}
 <body>
-    <div class = "bg-white px-20">
-        <h2>Résultat :</h2>
-        <p>Avec le model {{prediction.reg_model}} la redevance pour {{prediction.user_id.prenom}} {{prediction.user_id.prenom}} serait de {{ prediction.result }} euros.</p>
+    <div class="max-w-4xl mx-auto mt-4 bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-4xl font-bold text-center text-orange-800">Résultat :</h2>
+        <p>Avec le model {{prediction.reg_model}} la redevance pour {{prediction.user_id.prenom}} {{prediction.user_id.nom}} serait de {{ prediction.result }} euros.</p>
         <div>
             <h3>Données de la victime :</h3>
-            <ul>
+            <ul class="mt-2 text-gray-600">
                 <li>age : {{prediction.age}}</li>
                 <li>genre : {{prediction.sex}}</li>
                 <li>poid : {{prediction.weight}} kg</li>
@@ -18,7 +18,9 @@
                 <li>fumeur : {{prediction.smoker}}</li>
                 <li>region : {{prediction.region}}</li>
             </ul>
-            <a href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a href="{% url 'prediction_update' prediction.id %}">Modifier</a>
+            <div class="p-2" >
+                <a class="btn text-lg hover:bg-blue-700 mx-2" href="{% url 'prediction_delete' prediction.id %}">Supprimer</a> <a class="btn text-lg hover:bg-blue-700 mx-2" href="{% url 'prediction_update' prediction.id %}">Modifier</a>
+            </div>
         </div>
     </div>
 
