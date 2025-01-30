@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'theme',
     'tailwind',
     'meetings',
-    'django_agenda',
     'widget_tweaks',
     'infos',
     'django.contrib.admin',
@@ -140,6 +139,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
 
 # # Dossier pour collecter les fichiers statiques (collectstatic)
 STATIC_ROOT = BASE_DIR / "staticfiles"

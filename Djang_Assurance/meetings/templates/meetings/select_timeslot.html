@@ -1,0 +1,28 @@
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content %}
+<div class="bg-white justify-center px-20">
+    <h1 class="text-xl font-bold">Prendre rendez-vous avec {{ staff_user.user.prenom }}</h1>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+
+        <label for="start_time">Choisir l'heure :</label>
+        <select name="start_time" id="start_time" required>
+            {% for time in available_timeslots %}
+                <option value="{{ time|date:"H:i" }}">{{ time|date:"H:i" }}</option>
+            {% empty %}
+                <option>Aucun créneau disponible</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn text-lg">Réserver</button>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </form>
+
+{% endblock %}

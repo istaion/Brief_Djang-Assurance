@@ -1,10 +1,60 @@
-<h1>Mes Rendez-vous</h1>
-<ul>
-    {% for meeting in object_list %}
-        <li>
-            <strong>{{ meeting.subject }}</strong> avec {{ meeting.staff_member }}
-            le {{ meeting.date|date:"d/m/Y H:i" }}
-        </li>
-    {% endfor %}
-</ul>
-<a href="{% url 'meeting_create' %}">Prendre un rendez-vous</a>
+{% extends "base.html" %} 
+{% load  widget_tweaks %}
+{% load static tailwind_tags %}
+
+{% block content%}
+    <h1 class="text-3xl text-center font-bold">Agenda de la semaine</h1>
+
+    <!-- Navigation -->
+    <div class="bg-white flex flex-col items-center px-6 py-4 shadow-md rounded-lg mt-4">
+        <div class="flex justify-center items-center gap-4">
+            <a href="{% url 'agenda_by_date' week_start_date=previous_week|date:"Y-m-d" %}" 
+               class="btn text-lg hover:bg-blue-700">
+                ⬅️ Semaine précédente
+            </a>
+            <span class="text-lg font-semibold text-center">
+                {{ week_start_date|date:"d/m/Y" }} - {{ next_week|date:"d/m/Y" }}
+            </span>
+            <a href="{% url 'agenda_by_date' week_start_date=next_week|date:"Y-m-d" %}" 
+               class="btn text-lg hover:bg-blue-700">
+                Semaine suivante ➡️
+            </a>
+        </div>
+    </div>
+
+    <!-- Tableau de l'agenda -->
+    <div class="overflow-x-auto mt-6">
+        <table class="w-full border-collapse border border-gray-300 text-sm text-center text-gray-600">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="border border-gray-300 px-4 py-2">Jour</th>
+                    {% for slot in time_slots %}
+                        <th class="border border-gray-300 px-4 py-2">{{ slot }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for day, day_name in days_of_week %}
+                    <tr class="border border-gray-300">
+                        <td class="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">{{ day_name }}</td>
+                        {% for slot in time_slots %}
+                            <td class="border border-gray-300 px-4 py-2">
+                                {% for entry in agenda %}
+                                    {% if entry.day == day and entry.slot == slot %}
+                                        {% if entry.state == 'Disponible' %}
+                                            <span class="block px-2 py-1 rounded-lg bg-green-200 text-green-800 font-semibold">Disponible</span>
+                                        {% elif entry.state == 'Indisponible' %}
+                                            <span class="block px-2 py-1 rounded-lg bg-gray-200 text-gray-800 font-semibold">Indisponible</span>
+                                        {% else %}
+                                            <span class="block px-2 py-1 rounded-lg bg-red-200 text-red-800 font-semibold">{{ entry.state }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

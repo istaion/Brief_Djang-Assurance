@@ -18,16 +18,19 @@ class PrivacyView(TemplateView):
     template_name = 'infos/privacy.html'
 
 
-class ContactView(FormView):
-    template_name = 'infos/contact.html'
-    form_class = ContactForm
-    success_url=reverse_lazy('accueil')
 
+class ContactView(FormView):
+    template_name = 'infos/contact.html'  
+    form_class = ContactForm  
+    success_url = reverse_lazy('contact') 
 
     def form_valid(self, form):
+        # Enregistrer les données du formulaire
         form.save()
+        # Ajouter un message de succès
+        messages.success(self.request, "Votre message a bien été envoyé. Merci de nous avoir contactés !")
         return super().form_valid(form)
-        
+
 
     #     #succes
     #     messages.success(self.request, 'Merci pour votre message ! Nous y répondrons dans les plus brefs délais')

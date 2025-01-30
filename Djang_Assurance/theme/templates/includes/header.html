@@ -13,9 +13,9 @@
       {% comment %} <h4 class="text-5xl">Assur'aimant ❤️</h4> {% endcomment %}
     {% comment %} <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
+        <a href="{% url 'accueil'%}" class="-m-1.5 p-1.5">
           <span class="sr-only">Assur'Aimant</span>
-          <img  style="height: 150px; width: 150px;"  src="{% static 'css/dist/logo.jpg' %}" alt="">
+          <img  style="height: 150px; width: 150px;" src="{% static 'css/dist/logo.jpg' %}" alt="">
         </a>
       </div>
       <div class='text-center font-bold text-2xl my-8'><p class="text-[#E9967A]">L’assurance des rêveurs qui ont besoin du unicorn power</p><div/>
@@ -90,7 +90,7 @@
                     <a href="{% url 'connexion' %}" class="text-sm font-semibold text-gray-900">Log in &rarr;</a>
                 {% endif %}
             
-            
+              {% if request.user.is_authenticated %}
                   <!-- Menu Burger -->
               <div class="relative">
                 <button type="button" onclick="toggleMenu()" class="p-2 text-gray-700">
@@ -99,14 +99,22 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                     </svg>
                 </button>
-
+                {% if request.user.is_staff %}
                 <!-- Menu caché -->
                 <div id="burger-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
-                    <a href="/profil" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Rendez-vous</a>
-                    <a href="/prédiction" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Votre offre</a>
+                  <a href="{% url 'profil' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                  <a href="{% url 'agenda' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Agenda</a>
+                  <a href="{% url 'results' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Votre offre</a>
+                </div>                {% else %}
+                <!-- Menu caché -->
+                <div id="burger-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                    <a href="{% url 'profil' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                    <a href="{% url 'user_meeting_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Rendez-vous</a>
+                    <a href="{% url 'user_prediction' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Votre offre</a>
                 </div>
-            </div>
+                {% endif %}
+              </div>
+              {% endif %}
           </nav>
     </header>
 </body>

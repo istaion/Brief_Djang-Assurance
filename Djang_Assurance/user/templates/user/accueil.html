@@ -32,7 +32,85 @@
         </div>
     </div>
 
-    <!-- Section Avis Clients -->
+    <div class="flex flex-wrap justify-center gap-8 p-8">
+        <div class="bg-white border border-gray-300 w-72 shadow-md rounded-xl p-4">
+            <p class="text-gray-600">
+                <span class="text-sm font-bold text-indigo-500">
+                    “
+                </span>
+                Les licornes ont changé ma vie : Depuis j'aborde avec sérénité l'idée de porter des t-shirts roses !
+                <span class="text-sm font-bold text-indigo-500">
+                    ”
+                </span>
+            </p>
+            <div class="flex items-center mt-4">
+                <a href="#" class="relative block">
+                    <img alt="profil" src="{% static '/css/dist/michou.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
+                </a>
+                <div class="flex flex-col justify-between ml-2">
+                    <span class="text-sm font-semibold text-indigo-500">
+                        Michou
+                    </span>
+                    <span class="flex items-center text-xs text-gray-500">
+                        Unicorner depuis 1982
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white border border-gray-300 w-72 shadow-md rounded-xl p-4">
+            <p class="text-gray-600">
+                <span class="text-sm font-bold text-indigo-500">
+                    “
+                </span>
+                Difficile de se rappeler ce qu'était ma vie avant de passer chez Assur'AImant, mais pour rien au monde je n'y reviendrais.
+                <span class="text-sm font-bold text-indigo-500">
+                    ”
+                </span>
+            </p>
+            <div class="flex items-center mt-4">
+                <a href="#" class="relative block">
+                    <img alt="profil" src="{% static '/css/dist/gisele.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
+                </a>
+                <div class="flex flex-col justify-between ml-2">
+                    <span class="text-sm font-semibold text-indigo-500">
+                        Gisèle
+                    </span>
+                    <span class="flex items-center text-xs text-gray-500">
+                        Unicorner depuis 2026
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white border border-gray-300 w-72 shadow-md rounded-xl p-4">
+            <p class="text-gray-600">
+                <span class="text-sm font-bold text-indigo-500">
+                    “
+                </span>
+                Enfin une assurance qui me permet d'avoir une boite de Doliprane !
+                <span class="text-sm font-bold text-indigo-500">
+                    ”
+                </span>
+            </p>
+            <div class="flex items-center mt-4">
+                <a href="#" class="relative block">
+                    <img alt="profil" src="{% static '/css/dist/jean_miguel.jpg' %}" class="object-cover rounded-full h-10 w-10"/>
+                </a>
+                <div class="flex flex-col justify-between ml-2">
+                    <span class="text-sm font-semibold text-indigo-500">
+                        Jean Miguel
+                    </span>
+                    <span class="flex items-center text-xs text-gray-500">
+                        Unicorner depuis 2010
+                        <img src="{% static 'css/dist/logo_small.jpg' %}" style="width:10px; height:10px;"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} <!-- Section Avis Clients -->
     <div class="mt-16">
         <h2 class="text-3xl font-semibold text-center text-gray-800">Ce que disent nos clients</h2>
         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -68,6 +146,6 @@
                 <p class="mt-2 text-gray-600">Gérez votre assurance en ligne en toute simplicité.</p>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 </div>
 {% endblock %}
