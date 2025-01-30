@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import CustomUser, StaffUser
 
+
 # Signal post-save pour créer automatiquement un StaffUser
 @receiver(post_save, sender=CustomUser)
 def create_staff_user(sender, instance, created, **kwargs):
